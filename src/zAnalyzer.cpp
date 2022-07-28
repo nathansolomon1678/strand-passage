@@ -31,14 +31,11 @@ bool Analyzer::add_initial_conformation(istream& is){
 bool Analyzer::add_initial_conformation_from_file(char* filename){
 	ifstream in;
 	in.open(filename);
-	if (!in){
-		cout << "ERROR: UNABLE TO OPEN FILE";
+	if (!in) {
+    std::cout << "ERROR: UNABLE TO OPEN FILE" << std::endl;
 		return false;
 	}
-	if (add_initial_conformation(in))
-		return true;
-	else
-		return false;
+	return add_initial_conformation(in);
 }
 
 void Analyzer::reset(){
@@ -52,14 +49,14 @@ void Analyzer::reset(){
 bool Analyzer::z_from_length(double target_in, double mean_tol){
 	int timeout = 20;
 	target = target_in;
-	cout << endl <<"Initializing Search..." << endl;
+  std::cout << std::endl <<"Initializing Search..." << std::endl;
 	initialize_search(mean_tol);
 	cout << endl;
 	//while the target is outside the guess window
 	while ((guess.center - guess.std_dev > target + mean_tol) || (guess.center + guess.std_dev < target - mean_tol)){
-		cout << "=========================================================================" << endl;
-		cout << endl << "Step("<< 21 - timeout <<"): Current Z-vals: "<< min.z << "(" << min.center <<")  " << guess.z << "(" << guess.center << ")  " << max.z << "(" << max.center << ")" << endl;
-		cout << "=========================================================================" << endl;
+    std::cout << "=========================================================================" << std::endl;
+    std::cout << std::endl << "Step(" << 21 - timeout << "): Current Z-vals: " << min.z << "(" << min.center << ")  " << guess.z << "(" << guess.center << ")  " << max.z << "(" << max.center << ")" << std::endl;
+    std::cout << "=========================================================================" << std::endl;
 		if(target < guess.center){
 			max = guess;
 			guess.z = exp((log(min.z) + log(guess.z))/2);
@@ -91,11 +88,12 @@ bool Analyzer::length_from_z(search_data* in, bool probe){
 	//clkConformationBfacf3 knot(*knot);
 	knot->setZ(in->z);
 	//knot.setSeed(rand() % 20000); //seed 42 used for experimental reproducability
-	if (probe == true)
+	if (probe) {
 		timeout = 1;
-	else
+  } else {
 		timeout = 20;
-	while(timeout && ((std_dev > in->std_dev_tol) || std_dev == 0)){
+  }
+	while (timeout && ((std_dev > in->std_dev_tol) || std_dev == 0)) {
 		timeout--;
 		data.clear();
 		cout << "========================================================================="<< endl;
@@ -145,7 +143,7 @@ bool Analyzer::length_from_z(search_data* in, bool probe){
 bool Analyzer::initialize_search(double mean_tol){
 	//probe
 	reset();
-	//double init_lower = .1, init_upper = critical_z;
+	//double init_lower = .1, init_upper = CRITICAL_Z;
 	double step_size = (init_upper - init_lower)/20; //changed to /20 for unknot;
 	//scale with 1/(z-z0(^2)) //pulls
 	/*[3/31/13 10:41:09 AM] Reuben Brasher: length, 1/(z-z_0), 1/(z-z_0)^2, 1/(z_z_0)^3...
@@ -196,7 +194,7 @@ top:
 bool Analyzer::check_overlap(){
 	int timeout = 10;
 	search_data temp;
-	cout << "Checking overlap..." << endl;
+  std::cout << "Checking overlap..." << std::endl;
 	while (timeout && (guess.center + guess.std_dev) >= (max.center - max.std_dev)){
 		timeout--;
 		guess.std_dev_tol /= 2;
@@ -217,17 +215,17 @@ bool Analyzer::check_overlap(){
 			length_from_z(&guess, false);
 
 		end:
-			if (max.center < min.center){
+			if (max.center < min.center) {
 				temp = min;
 				min = max;
 				max = temp;
 			}
-			if (min.center > guess.center){
+			if (min.center > guess.center) {
 				temp = min;
 				min = guess;
 				guess = temp;
 			}
-			if (max.center < guess.center){
+			if (max.center < guess.center) {
 				temp = guess;
 				guess = max;
 				max = temp;

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef Z_ANALYZER
+#define Z_ANALYZER
 
 #include <iostream>
 #include <list>
@@ -13,12 +14,10 @@
 #include "conformationAsList.h"
 #include "genericConformation.h"
 
-#define critical_z 0.2134
+#define CRITICAL_Z 0.2134
 
-using namespace std;
-
-class search_data{
-public:
+class search_data {
+ public:
 	double center, std_dev, std_dev_tol , z/*,autocorr_data, autocorr_error, length_var*/;
 	int n;
 	//scale tol with current length?
@@ -26,7 +25,7 @@ public:
 	search_data(): center(0), std_dev(0), std_dev_tol(20), z(0), n(10000)/*,autocorr_data(0), autocorr_error(0), length_var(0)*/{}
 };
 
-class Analyzer{
+class Analyzer {
 	search_data min, max, guess;
 	double init_lower, init_upper;
 	int target, q, w, n_components, c_steps;
@@ -34,7 +33,7 @@ class Analyzer{
 	clkConformationAsList initialComp0;
 	clkConformationAsList initialComp1;
 
-public:
+ public:
 	bool add_initial_conformation(istream&);
 	bool add_initial_conformation_from_file(char* filename);
 	void reset();
@@ -50,3 +49,5 @@ public:
 
 	Analyzer(char* filename, double Init_lower, double Init_upper, int warmup, int c, int init_q);
 };
+
+#endif  // Z_ANALYZER
