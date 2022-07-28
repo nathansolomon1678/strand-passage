@@ -18,7 +18,7 @@
 #include "bfacfProbabilities.h"
 
 #define DEFAULT_Z 0.20815
-#define MAX_PRECOMPUTE_LENGTH 5000
+#define MAX_PRECOMPUTE_LENGTH 5000  //maximum length to precompute BFACF transition probabilities when using the init_Q function
 
 //stores a set of BFACF probabilities
 struct probs{

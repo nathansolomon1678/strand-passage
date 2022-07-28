@@ -24,8 +24,6 @@ using namespace std;
 #define ARC1(I, J)  ((J) - (I) - 1)
 #define ARC2(I, J, N) ((N) + (I) - (J) - 1)
 #define DEFAULT_RECOMBO_MAX 108
-//maximum length to precompute BFACF transition probabilities when using the init_Q function
-
 
 ostream& operator<<(ostream& out, ivector v)
 {
@@ -790,9 +788,9 @@ void clkConformationBfacf3::step(int n)
       perform_move(implementation->clkp);
 }
 
-void clkConformationBfacf3::init_Q(double z, double q)
-{
-	for (int i=4; i < MAX_PRECOMPUTE_LENGTH; i++){
+void clkConformationBfacf3::init_Q(double z, double q) {
+    // Precompute the transition probabilities, which depend on knot length
+	for (int i = 4; i < MAX_PRECOMPUTE_LENGTH; i += 2) {
 		probMap[i].p_plus2 = (pow((i+2),(q-1))*(z * z)) / (pow(i,(q-1)) + 3.0*pow((i+2),q-1) * z * z);
 		probMap[i].p_minus2 = pow(i-2, (q - 1)) / (pow(i-2, (q - 1)) + 3.0*pow(i, q - 1) * z * z);
 		probMap[i].p_0 = .5*(probMap[i].p_plus2 + probMap[i].p_minus2);
@@ -1224,8 +1222,9 @@ bool clkConformationBfacf3::performRecombination(std::ostream& os, int Sequence_
               else                                                                 // locally negative, doing positive virtual recombo is more natural
                   perform_virtual_recombination_inverted(os, 1, site.first, site.second, numvertices);
           }
-          else                                                                         // manual virtual recombo
+          else {                                                                       // manual virtual recombo
               perform_virtual_recombination_inverted(os, Recombo_type, site.first, site.second, numvertices);
+          }
           return false;
       }
    }
@@ -1251,8 +1250,7 @@ bool clkConformationBfacf3::performRecombination(std::ostream& os, int Sequence_
                  perform_virtual_recombination_direct(os, Recombo_type, site.first, site.second, 1, numvertices);
              return false;
          }
-         else                                                                          // link -> knot
-         {
+         else {                                                                        // link -> knot
              if (Recombo_type == 3 || Recombo_type == 6){                              // writhe-based virtual recombo
                  int local_positivity = checkLocalPositivity(site.first, site.second);
                  if (local_positivity)                                                 // locally a + crossing, do - virtual recombo is more natural
@@ -1260,8 +1258,9 @@ bool clkConformationBfacf3::performRecombination(std::ostream& os, int Sequence_
                  else                                                                  // locally a - crossing, do + virtual recombo is more natural
                      perform_virtual_recombination_direct(os, 1, site.first, site.second, 2, numvertices);
              }
-             else                                                                     // manual virtual recombination
+             else {                                                                   // manual virtual recombination
                  perform_virtual_recombination_direct(os, Recombo_type, site.first, site.second, 2, numvertices);
+             }
              return false;
          }
       }
@@ -1274,14 +1273,15 @@ bool clkConformationBfacf3::performRecombination(int n){   //only used by runRec
     //checks if the site contains parallel edges, need update ep2 after return from perform_recombination() to
     // make ep1 and ep2 parallel in the site
     // for the later use in undo_recombination()
-    if (site.first->dir == site.second->dir)
-    {
+    if (site.first->dir == site.second->dir) {
         EdgePtr newep2 = site.first->next;
         perform_recombination(implementation->clkp, site.first, site.second);
         implementation->sites[n].second = newep2;
     }
-    else
+    else {
         perform_recombination(implementation->clkp, site.first, site.second);
+    }
+    return true;
 }
 
 //void clkConformationBfacf3::performPositiveVirtualRecombo()

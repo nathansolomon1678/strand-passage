@@ -1,4 +1,5 @@
 #include "mmchain.h"
+#include <iostream>
 
 using namespace std;
 
@@ -281,6 +282,7 @@ void mmchain::swap(){
 			else{ 
 				intervals[i].attempted_swaps++;
 			}
+
 		}
 	if (n_components == 2){ //rewritten for new swap condition, untested
 		for (i = 0; i < m-1;i++){
@@ -547,6 +549,7 @@ void mmchain::writeSitesFile(clkConformationBfacf3* clk, int site_choice){
 }
 
 void mmchain::write_to_block_file(clkConformationBfacf3* clk){
+    std::cout << clk->getComponent(0).size() << std::endl;
 	if ((block_file_index < block_file_size) && (block_file_index != 0)){
 		//write conformation to file
 		if (n_components == 1){
