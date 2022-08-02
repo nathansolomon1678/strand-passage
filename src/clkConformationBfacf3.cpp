@@ -103,42 +103,35 @@ double bfacfProbabilitiesFromComponent::p2p02p2() const
 
 // implementation of clkConformationBfacf3Component
 
-class clkConformationBfacf3Component::impl
-{
-public:
-   ComponentCLKPtr component;
+class clkConformationBfacf3Component::impl {
+  public:
+    ComponentCLKPtr component;
 
-   impl(ComponentCLKPtr component) : component(component) { }
+    impl(ComponentCLKPtr component) : component(component) { }
 
-   ~impl() { }
+    ~impl() { }
 };
 
-void clkConformationBfacf3Component::getVertex(int index, threevector<int>& v) const
-{
-   index %= size();
-   EdgePtr edge = implementation->component->first_edge;
-   for (int i = 0; i < index; i++)
-   {
-      edge = edge->next;
-   }
-   //   v.set(edge->start[0], edge->start[1], edge->start[2]);
-   v = edge->start;
+void clkConformationBfacf3Component::getVertex(int index, threevector<int>& v) const {
+    index %= size();
+    EdgePtr edge = implementation->component->first_edge;
+    for (int i = 0; i < index; i++) {
+        edge = edge->next;
+    }
+    v = edge->start;
 }
 
-void clkConformationBfacf3Component::getVertices(std::list<threevector<int> >& vertices) const
-{
-   vertices.clear();
-   int nvertices = implementation->component->nedges;
-   EdgePtr edge = implementation->component->first_edge;
-   for (int i = 0; i < nvertices; i++)
-   {
-      vertices.push_back(threevector<int>(edge->start));
-   }
+void clkConformationBfacf3Component::getVertices(std::list<threevector<int> >& vertices) const {
+    vertices.clear();
+    int nvertices = implementation->component->nedges;
+    EdgePtr edge = implementation->component->first_edge;
+    for (int i = 0; i < nvertices; i++) {
+        vertices.push_back(threevector<int>(edge->start));
+    }
 }
 
-int clkConformationBfacf3Component::size() const
-{
-   return implementation->component->nedges;
+int clkConformationBfacf3Component::size() const {
+    return implementation->component->nedges;
 }
 
 clkConformationBfacf3Component::clkConformationBfacf3Component(const clkConformationBfacf3Component & orig) :
@@ -147,31 +140,22 @@ implementation(new clkConformationBfacf3Component::impl(orig.implementation->com
 clkConformationBfacf3Component::clkConformationBfacf3Component(clkConformationBfacf3Component::impl * implementation) :
 implementation(implementation) { }
 
-clkConformationBfacf3Component::~clkConformationBfacf3Component()
-{
+clkConformationBfacf3Component::~clkConformationBfacf3Component() {
    // clkConformationBfacf3Component owns implementation, but none of the data in implementation
    delete implementation;
 }
 
-double clkConformationBfacf3Component::getZ() const
-{
-   return implementation->component->z;
+double clkConformationBfacf3Component::getZ() const {
+    return implementation->component->z;
 }
 
-void clkConformationBfacf3Component::setZ(double z)
-{
-   bfacf_set_probabilities(implementation->component, z);
+void clkConformationBfacf3Component::setZ(double z) {
+    bfacf_set_probabilities(implementation->component, z);
 }
 
-bfacfProbabilitiesFromComponent clkConformationBfacf3Component::getProbabilities() const
-{
-   return bfacfProbabilitiesFromComponent(new bfacfProbabilitiesFromComponent::impl(implementation->component));
+bfacfProbabilitiesFromComponent clkConformationBfacf3Component::getProbabilities() const {
+    return bfacfProbabilitiesFromComponent(new bfacfProbabilitiesFromComponent::impl(implementation->component));
 }
-
-//class impl;
-//impl *implementation;
-
-// implementation of clkConformationBfacf3
 
 static char directionString[][8] = {
    "north",
@@ -192,18 +176,15 @@ static int oppositeDir[6] = {
    MOVE_UP
 };
 
-bool oppositeDirection(int d1, int d2)
-{
-   if (d1 < 0 || d1 >= 6) return false;
-   return d2 == oppositeDir[d1];
+bool oppositeDirection(int d1, int d2) {
+    if (d1 < 0 || d1 >= 6) { return false; }
+    return d2 == oppositeDir[d1];
 }
 
-class clkConformationBfacf3::impl
-{
-   CubicLatticeKnotPtr clkp;
+class clkConformationBfacf3::impl {
+    CubicLatticeKnotPtr clkp;
 
-   impl(const clk& firstComponent)
-   {
+    impl(const clk& firstComponent) {
       // TODO: might want to have the option of setting poolsize to something other than default
       int poolsize = DEFAULT_POOLSIZE;
 
@@ -710,13 +691,13 @@ class clkConformationBfacf3::impl
 };
 
 
-clkConformationBfacf3::clkConformationBfacf3(const clk & firstComponent) :
+clkConformationBfacf3::clkConformationBfacf3(const clk& firstComponent) :
 implementation(new clkConformationBfacf3::impl(firstComponent)) {
 	probMap = new probs[MAX_PRECOMPUTE_LENGTH];
 	q = 1;
 }
 
-clkConformationBfacf3::clkConformationBfacf3(const clk& firstComponent, const clk & secondComponent) :
+clkConformationBfacf3::clkConformationBfacf3(const clk& firstComponent, const clk& secondComponent) :
 implementation(new clkConformationBfacf3::impl(firstComponent, secondComponent)) {
 	probMap = new probs[MAX_PRECOMPUTE_LENGTH];
 	q = 1;
@@ -782,10 +763,10 @@ void clkConformationBfacf3::step()
    perform_move(implementation->clkp);
 }
 
-void clkConformationBfacf3::step(int n)
-{
-   for (int i = 0; i < n; i++)
-      perform_move(implementation->clkp);
+void clkConformationBfacf3::step(int n) {
+    for (int i = 0; i < n; i++) {
+        perform_move(implementation->clkp);
+    }
 }
 
 void clkConformationBfacf3::init_Q(double z, double q) {
@@ -830,10 +811,10 @@ void clkConformationBfacf3::stepQ(int current_q, double z)
 	perform_move(implementation->clkp);
 }
 
-void clkConformationBfacf3::stepQ(long int c, int q, double z)
-{
-	for (long int i = 0; i < c; i++)
+void clkConformationBfacf3::stepQ(long int c, int q, double z) {
+	for (long int i = 0; i < c; i++) {
 		stepQ(q, z);
+    }
 }
 
 

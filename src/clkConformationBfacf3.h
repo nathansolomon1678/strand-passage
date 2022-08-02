@@ -125,7 +125,7 @@ public:
    virtual void step(int n);
    
     /**
-    * initializes an ordered hashmap of bfacf probability containing structures for a wide range of lengths
+    * initializes an ordered hashmap of BFACF probability containing structures for a wide range of lengths
 	*/
    void init_Q(double z, double q);
 

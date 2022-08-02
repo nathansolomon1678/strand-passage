@@ -26,10 +26,8 @@ int main(void)
 	suite.add_test(testReadFromText, "testReadFromText");
 	suite.add_test(testReadFromCoords, "testReadFromCoords");
 
-	suite.add_test(testRandomReset, "testRandomReset");
 	suite.add_test(testBfacf3, "testBfacf3");
 	suite.add_test(testBfacf3SetZ, "testBfacf3SetZ");
-	suite.add_test(testBfacf3Run, "testBfacf3Run");
 	//suite.add_test(testBfacf3CountEdges, "testBfacf3CountEdges"); //incomplete 
 
 	suite.add_test(testRandom, "raw sequence for pseudorandom number generator", "", 

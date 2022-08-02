@@ -6,6 +6,11 @@
 *.user
 *.sln.docstates
 
+# Not sure where these files come from
+README
+NEWS
+AUTHORS
+
 # Build results
 
 [Dd]ebug/

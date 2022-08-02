@@ -413,7 +413,7 @@ void mmchain::calibrate_chains(){
 // 'a' and 'b' modes are handled without calling this function. Other sampling modes are covered below.
 // 'e' mode is changed to 's' mode in the main program loop, which is modified to run forever. 
 int mmchain::sample(){
-	if (sample_mode == 's'){ // standard sampling
+	if (sample_mode == 's') { // standard sampling
 		int samples = 0;
 		for (int i = 0; i < m; i++){
 		    int para_site = 0, anti_site = 0;
@@ -432,11 +432,13 @@ int mmchain::sample(){
 				samples++;
 			}
 		}
-		return samples;
-	}
-	else if (sample_mode == 'm' or sample_mode == 'f'){
-		return block_mean_sample();
-	}
+    return samples;
+  } else if (sample_mode == 'm' or sample_mode == 'f') {
+    return block_mean_sample();
+  } else {
+    std::cout << "ERROR: sample mode is " << sample_mode << std::endl;
+    return -1;
+  }
 }
 
 

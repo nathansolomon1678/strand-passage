@@ -49,9 +49,8 @@ int RandSimple()
 static int iset_gaussian = 0;
 static real gset_gaussian = 0.0;
 
-real rand_uniform()
-{
-   return (real) RandSimple() / (real) 2147483647.0;
+real rand_uniform() {
+   return (real) ((double) std::rand() / 2147483647.);
 }
 
 real rand_gaussian()
