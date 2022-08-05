@@ -24,8 +24,6 @@
 #include "conformationAsList.h"
 #include "genericConformation.h"
 
-using namespace std;
-
 /**
  * Implimentation of the Multiple Markov Process
  *

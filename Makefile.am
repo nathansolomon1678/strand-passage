@@ -6,7 +6,7 @@ all: mmc zAnalyzer idknot homfly xinger testRecombo sampleTests test
 
 bin_PROGRAMS = mmc zAnalyzer idknot homfly xinger testRecombo sampleTests  
 
-obj_src = src/argprocessor.cpp src/autocorr.cpp src/bfacfProbabilities.cpp src/bfacfProbabilitiesFromZ.cpp src/bfacfProbabilitiesFromZFixed.cpp src/clk.cpp src/clkCigar.cpp src/clkConformationAsList.cpp src/clkConformationBfacf3.cpp src/clkConformationSeqconvert.cpp src/conformationAsList.cpp src/conformation.cpp src/legacyBfacf.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp
+obj_src = src/argprocessor.cpp src/autocorr.cpp src/clk.cpp src/clkCigar.cpp src/clkConformationAsList.cpp src/clkConformationSeqconvert.cpp src/conformationAsList.cpp src/conformation.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp
 
 mmc_SOURCES = $(obj_src) src/mmcMain.cpp
 

@@ -21,20 +21,12 @@ set(SHARED_SOURCE_FILES
         src/argprocessor.h
         src/autocorr.cpp
         src/autocorr.h
-        src/bfacfProbabilities.cpp
-        src/bfacfProbabilities.h
-        src/bfacfProbabilitiesFromZ.cpp
-        src/bfacfProbabilitiesFromZ.h
-        src/bfacfProbabilitiesFromZFixed.cpp
-        src/bfacfProbabilitiesFromZFixed.h
         src/clk.cpp
         src/clk.h
         src/clkCigar.cpp
         src/clkCigar.h
         src/clkConformationAsList.cpp
         src/clkConformationAsList.h
-        src/clkConformationBfacf3.cpp
-        src/clkConformationBfacf3.h
         src/clkConformationSeqconvert.cpp
         src/clkConformationSeqconvert.h
         src/conformation.cpp
@@ -46,8 +38,6 @@ set(SHARED_SOURCE_FILES
         src/id.h
         src/legacy.cpp
         src/legacy.h
-        src/legacyBfacf.cpp
-        src/legacyBfacf.h
         src/main.cpp
         src/mmchain.cpp
         src/mmchain.h
