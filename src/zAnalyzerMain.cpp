@@ -11,16 +11,15 @@ void print_usage() {
 	          << "zAnalyzer operators:\n"
 	          << "-l\ttarget length\n"
 	          << "-tol\ttolerated error in avg length of the returned z-value\n"
-	          << "-c\tbest guess for the number of BFACF steps needed between samples for independence\n"
 	          << "-w\tbest guess for an appropriate warmup\n"
 	          << "-q\tbest guess for an initial q value" << std::endl;
 }
 
 int main(int argc, char* argv[]) {
 	char* infile = NULL, *outfile = NULL;
-	int target_length = 0, tol = 0, warmup = 0, c = 0, q = 0;
+	int target_length = 0, tol = 0, warmup = 0, q = 0;
 
-	if (argc < 9) {
+	if (argc < 7) {
 		print_usage();
 		return 0;
 	}
@@ -34,8 +33,6 @@ int main(int argc, char* argv[]) {
 			tol = std::atoi(argv[i+1]);
 		} else if (!strcmp(argv[i], "-q")) {
 			q = std::atoi(argv[i + 1]);
-		} else if (!strcmp(argv[i], "-c")) {
-			c = std::atoi(argv[i + 1]);
 		} else if (!strcmp(argv[i], "-w")) {
 			warmup = std::atoi(argv[i + 1]);
 		} else {
@@ -44,7 +41,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	
-	Analyzer analyzer(infile, warmup, c, q);
+	Analyzer analyzer(infile, warmup, q);
 	analyzer.optimize(target_length, tol);
 	
 	return 0;

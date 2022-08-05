@@ -30,10 +30,10 @@ class Analyzer {
   public:
 	bool add_initial_conformation(istream&);
 	bool add_initial_conformation_from_file(char* filename);
-    void get_knot_length(double& mean, double& std_dev, double z, double q, int num_samples, int steps_between_samples, int num_warmup_steps);
+    void get_knot_length(double& mean, double& std_dev, double& autocorr_coefficient, double z, double q, int num_samples, int steps_between_samples, int num_warmup_steps);
 	void optimize(double target_length, double tolerance);
 
-	Analyzer(char* filename, int warmup, int c, int init_q);
+	Analyzer(char* filename, int warmup, int init_q);
 };
 
 #endif  // Z_ANALYZER

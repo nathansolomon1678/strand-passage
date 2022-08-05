@@ -6,8 +6,6 @@ set(EXECUTABLE_OUTPUT_PATH src/bin)
 set(TEST_SOURCE_FILES
         src/tests/argprocessorTests.cpp
         src/tests/argprocessorTests.h
-        src/tests/autocorrTests.cpp
-        src/tests/autocorrTests.h
         src/tests/basicTests.cpp
         src/tests/basicTests.h
         src/tests/clkTests.cpp

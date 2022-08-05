@@ -1,7 +1,6 @@
 #include "testFramework.h"
 
 #include "argprocessorTests.h"
-#include "autocorrTests.h"
 #include "clkTests.h"
 #include "randomTests.h"
 #include "recomboCriteriaTests.h"
@@ -11,8 +10,6 @@ using namespace std;
 int main(void)
 {
 	test_suite suite;
-
-	suite.add_test(testAutocorr, "autocorr");
 
 	suite.add_test(testData, "data");
 	suite.add_test(testCopyScalarToVector, "testCopyScalarToVector");
