@@ -5,7 +5,6 @@
 #include <list>
 #include <fstream>
 
-#include "pseudorandom.h"
 #include "autocorr.h"
 #include "clk.h"
 #include "clkCigar.h"

@@ -16,7 +16,6 @@
 #include <string.h>
 #include <sstream>
 
-#include "pseudorandom.h"
 #include "autocorr.h"
 #include "clk.h"
 #include "clkCigar.h"

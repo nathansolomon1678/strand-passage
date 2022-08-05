@@ -112,10 +112,9 @@ am__objects_1 = src/argprocessor.$(OBJEXT) src/autocorr.$(OBJEXT) \
 	src/clkCigar.$(OBJEXT) src/clkConformationAsList.$(OBJEXT) \
 	src/clkConformationBfacf3.$(OBJEXT) \
 	src/clkConformationSeqconvert.$(OBJEXT) \
-	src/conformationAsList.$(OBJEXT) src/conformationWlc.$(OBJEXT) \
-	src/conformation.$(OBJEXT) src/legacyBfacf.$(OBJEXT) \
-	src/legacy.$(OBJEXT) src/mmchain.$(OBJEXT) \
-	src/pseudorandom.$(OBJEXT) src/regularNgon.$(OBJEXT) \
+	src/conformationAsList.$(OBJEXT) src/conformation.$(OBJEXT) \
+	src/legacyBfacf.$(OBJEXT) src/legacy.$(OBJEXT) \
+	src/mmchain.$(OBJEXT) src/regularNgon.$(OBJEXT) \
 	src/zAnalyzer.$(OBJEXT) src/id.$(OBJEXT)
 am_homfly_OBJECTS = $(am__objects_1) src/cross.$(OBJEXT) \
 	src/polynomesAZ.$(OBJEXT) src/homfly1_21.$(OBJEXT)
@@ -138,12 +137,10 @@ am__objects_2 = src/sampleTests-argprocessor.$(OBJEXT) \
 	src/sampleTests-clkConformationBfacf3.$(OBJEXT) \
 	src/sampleTests-clkConformationSeqconvert.$(OBJEXT) \
 	src/sampleTests-conformationAsList.$(OBJEXT) \
-	src/sampleTests-conformationWlc.$(OBJEXT) \
 	src/sampleTests-conformation.$(OBJEXT) \
 	src/sampleTests-legacyBfacf.$(OBJEXT) \
 	src/sampleTests-legacy.$(OBJEXT) \
 	src/sampleTests-mmchain.$(OBJEXT) \
-	src/sampleTests-pseudorandom.$(OBJEXT) \
 	src/sampleTests-regularNgon.$(OBJEXT) \
 	src/sampleTests-zAnalyzer.$(OBJEXT) \
 	src/sampleTests-id.$(OBJEXT)
@@ -166,12 +163,10 @@ am__objects_3 = src/testRecombo-argprocessor.$(OBJEXT) \
 	src/testRecombo-clkConformationBfacf3.$(OBJEXT) \
 	src/testRecombo-clkConformationSeqconvert.$(OBJEXT) \
 	src/testRecombo-conformationAsList.$(OBJEXT) \
-	src/testRecombo-conformationWlc.$(OBJEXT) \
 	src/testRecombo-conformation.$(OBJEXT) \
 	src/testRecombo-legacyBfacf.$(OBJEXT) \
 	src/testRecombo-legacy.$(OBJEXT) \
 	src/testRecombo-mmchain.$(OBJEXT) \
-	src/testRecombo-pseudorandom.$(OBJEXT) \
 	src/testRecombo-regularNgon.$(OBJEXT) \
 	src/testRecombo-zAnalyzer.$(OBJEXT) \
 	src/testRecombo-id.$(OBJEXT)
@@ -179,7 +174,6 @@ am_testRecombo_OBJECTS = $(am__objects_3) \
 	src/tests/testRecombo-testFramework.$(OBJEXT) \
 	src/tests/testRecombo-argprocessorTests.$(OBJEXT) \
 	src/tests/testRecombo-clkTests.$(OBJEXT) \
-	src/tests/testRecombo-randomTests.$(OBJEXT) \
 	src/tests/testRecombo-recomboCriteriaTests.$(OBJEXT) \
 	src/tests/testRecombo-unitTestMain.$(OBJEXT)
 testRecombo_OBJECTS = $(am_testRecombo_OBJECTS)
@@ -218,13 +212,12 @@ am__depfiles_remade = src/$(DEPDIR)/argprocessor.Po \
 	src/$(DEPDIR)/clkConformationBfacf3.Po \
 	src/$(DEPDIR)/clkConformationSeqconvert.Po \
 	src/$(DEPDIR)/conformation.Po \
-	src/$(DEPDIR)/conformationAsList.Po \
-	src/$(DEPDIR)/conformationWlc.Po src/$(DEPDIR)/cross.Po \
+	src/$(DEPDIR)/conformationAsList.Po src/$(DEPDIR)/cross.Po \
 	src/$(DEPDIR)/homfly1_21.Po src/$(DEPDIR)/id.Po \
 	src/$(DEPDIR)/idknot.Po src/$(DEPDIR)/legacy.Po \
 	src/$(DEPDIR)/legacyBfacf.Po src/$(DEPDIR)/mmcMain.Po \
 	src/$(DEPDIR)/mmchain.Po src/$(DEPDIR)/polynomesAZ.Po \
-	src/$(DEPDIR)/pseudorandom.Po src/$(DEPDIR)/regularNgon.Po \
+	src/$(DEPDIR)/regularNgon.Po \
 	src/$(DEPDIR)/sampleTests-argprocessor.Po \
 	src/$(DEPDIR)/sampleTests-autocorr.Po \
 	src/$(DEPDIR)/sampleTests-bfacfProbabilities.Po \
@@ -237,12 +230,10 @@ am__depfiles_remade = src/$(DEPDIR)/argprocessor.Po \
 	src/$(DEPDIR)/sampleTests-clkConformationSeqconvert.Po \
 	src/$(DEPDIR)/sampleTests-conformation.Po \
 	src/$(DEPDIR)/sampleTests-conformationAsList.Po \
-	src/$(DEPDIR)/sampleTests-conformationWlc.Po \
 	src/$(DEPDIR)/sampleTests-id.Po \
 	src/$(DEPDIR)/sampleTests-legacy.Po \
 	src/$(DEPDIR)/sampleTests-legacyBfacf.Po \
 	src/$(DEPDIR)/sampleTests-mmchain.Po \
-	src/$(DEPDIR)/sampleTests-pseudorandom.Po \
 	src/$(DEPDIR)/sampleTests-regularNgon.Po \
 	src/$(DEPDIR)/sampleTests-zAnalyzer.Po \
 	src/$(DEPDIR)/testRecombo-argprocessor.Po \
@@ -257,12 +248,10 @@ am__depfiles_remade = src/$(DEPDIR)/argprocessor.Po \
 	src/$(DEPDIR)/testRecombo-clkConformationSeqconvert.Po \
 	src/$(DEPDIR)/testRecombo-conformation.Po \
 	src/$(DEPDIR)/testRecombo-conformationAsList.Po \
-	src/$(DEPDIR)/testRecombo-conformationWlc.Po \
 	src/$(DEPDIR)/testRecombo-id.Po \
 	src/$(DEPDIR)/testRecombo-legacy.Po \
 	src/$(DEPDIR)/testRecombo-legacyBfacf.Po \
 	src/$(DEPDIR)/testRecombo-mmchain.Po \
-	src/$(DEPDIR)/testRecombo-pseudorandom.Po \
 	src/$(DEPDIR)/testRecombo-regularNgon.Po \
 	src/$(DEPDIR)/testRecombo-zAnalyzer.Po \
 	src/$(DEPDIR)/zAnalyzer.Po src/$(DEPDIR)/zAnalyzerMain.Po \
@@ -271,7 +260,6 @@ am__depfiles_remade = src/$(DEPDIR)/argprocessor.Po \
 	src/tests/$(DEPDIR)/sampleTests-testFramework.Po \
 	src/tests/$(DEPDIR)/testRecombo-argprocessorTests.Po \
 	src/tests/$(DEPDIR)/testRecombo-clkTests.Po \
-	src/tests/$(DEPDIR)/testRecombo-randomTests.Po \
 	src/tests/$(DEPDIR)/testRecombo-recomboCriteriaTests.Po \
 	src/tests/$(DEPDIR)/testRecombo-testFramework.Po \
 	src/tests/$(DEPDIR)/testRecombo-unitTestMain.Po \
@@ -457,13 +445,13 @@ top_srcdir = @top_srcdir@
 AM_CXXFLAGS = -g -fpermissive -std=c++11
 AM_CFLAGS = 
 AM_LDFLAGS = 
-obj_src = src/argprocessor.cpp src/autocorr.cpp src/bfacfProbabilities.cpp src/bfacfProbabilitiesFromZ.cpp src/bfacfProbabilitiesFromZFixed.cpp src/clk.cpp src/clkCigar.cpp src/clkConformationAsList.cpp src/clkConformationBfacf3.cpp src/clkConformationSeqconvert.cpp src/conformationAsList.cpp src/conformationWlc.cpp src/conformation.cpp src/legacyBfacf.cpp src/legacy.cpp src/mmchain.cpp src/pseudorandom.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp
+obj_src = src/argprocessor.cpp src/autocorr.cpp src/bfacfProbabilities.cpp src/bfacfProbabilitiesFromZ.cpp src/bfacfProbabilitiesFromZFixed.cpp src/clk.cpp src/clkCigar.cpp src/clkConformationAsList.cpp src/clkConformationBfacf3.cpp src/clkConformationSeqconvert.cpp src/conformationAsList.cpp src/conformation.cpp src/legacyBfacf.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp
 mmc_SOURCES = $(obj_src) src/mmcMain.cpp
 zAnalyzer_SOURCES = $(obj_src) src/zAnalyzerMain.cpp
 idknot_SOURCES = $(obj_src) src/idknot.cpp
 homfly_SOURCES = $(obj_src) src/cross.c src/polynomesAZ.c src/homfly1_21.c
 xinger_SOURCES = src/xinger/main.cpp src/xinger/random.cpp src/xinger/util.cpp src/xinger/xinger.cpp
-testRecombo_SOURCES = $(obj_src) src/tests/testFramework.cpp src/tests/argprocessorTests.cpp src/tests/clkTests.cpp src/tests/randomTests.cpp src/tests/recomboCriteriaTests.cpp src/tests/unitTestMain.cpp
+testRecombo_SOURCES = $(obj_src) src/tests/testFramework.cpp src/tests/argprocessorTests.cpp src/tests/clkTests.cpp src/tests/recomboCriteriaTests.cpp src/tests/unitTestMain.cpp
 testRecombo_CXXFLAGS = $(AM_CXXFLAGS) -Isrc
 sampleTests_SOURCES = $(obj_src) src/tests/testFramework.cpp src/tests/sampleUnitTestMain.cpp src/tests/sampleUnitTests.cpp 
 sampleTests_CXXFLAGS = $(AM_CXXFLAGS) -Isrc
@@ -591,8 +579,6 @@ src/clkConformationSeqconvert.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/conformationAsList.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/conformationWlc.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
 src/conformation.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/legacyBfacf.$(OBJEXT): src/$(am__dirstamp) \
@@ -600,8 +586,6 @@ src/legacyBfacf.$(OBJEXT): src/$(am__dirstamp) \
 src/legacy.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/mmchain.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/pseudorandom.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/regularNgon.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
@@ -651,8 +635,6 @@ src/sampleTests-clkConformationSeqconvert.$(OBJEXT):  \
 	src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/sampleTests-conformationAsList.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/sampleTests-conformationWlc.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
 src/sampleTests-conformation.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/sampleTests-legacyBfacf.$(OBJEXT): src/$(am__dirstamp) \
@@ -660,8 +642,6 @@ src/sampleTests-legacyBfacf.$(OBJEXT): src/$(am__dirstamp) \
 src/sampleTests-legacy.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/sampleTests-mmchain.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/sampleTests-pseudorandom.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/sampleTests-regularNgon.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
@@ -707,8 +687,6 @@ src/testRecombo-clkConformationSeqconvert.$(OBJEXT):  \
 	src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/testRecombo-conformationAsList.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/testRecombo-conformationWlc.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
 src/testRecombo-conformation.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/testRecombo-legacyBfacf.$(OBJEXT): src/$(am__dirstamp) \
@@ -716,8 +694,6 @@ src/testRecombo-legacyBfacf.$(OBJEXT): src/$(am__dirstamp) \
 src/testRecombo-legacy.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/testRecombo-mmchain.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/testRecombo-pseudorandom.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/testRecombo-regularNgon.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
@@ -731,8 +707,6 @@ src/tests/testRecombo-argprocessorTests.$(OBJEXT):  \
 	src/tests/$(am__dirstamp) src/tests/$(DEPDIR)/$(am__dirstamp)
 src/tests/testRecombo-clkTests.$(OBJEXT): src/tests/$(am__dirstamp) \
 	src/tests/$(DEPDIR)/$(am__dirstamp)
-src/tests/testRecombo-randomTests.$(OBJEXT):  \
-	src/tests/$(am__dirstamp) src/tests/$(DEPDIR)/$(am__dirstamp)
 src/tests/testRecombo-recomboCriteriaTests.$(OBJEXT):  \
 	src/tests/$(am__dirstamp) src/tests/$(DEPDIR)/$(am__dirstamp)
 src/tests/testRecombo-unitTestMain.$(OBJEXT):  \
@@ -787,7 +761,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/clkConformationSeqconvert.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/conformation.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/conformationAsList.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/conformationWlc.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/cross.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/homfly1_21.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/id.Po@am__quote@ # am--include-marker
@@ -797,7 +770,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/mmcMain.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/mmchain.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/polynomesAZ.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/pseudorandom.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/regularNgon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-argprocessor.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-autocorr.Po@am__quote@ # am--include-marker
@@ -811,12 +783,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-clkConformationSeqconvert.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-conformation.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-conformationAsList.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-conformationWlc.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-id.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-legacy.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-legacyBfacf.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-mmchain.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-pseudorandom.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-regularNgon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/sampleTests-zAnalyzer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-argprocessor.Po@am__quote@ # am--include-marker
@@ -831,12 +801,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-clkConformationSeqconvert.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-conformation.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-conformationAsList.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-conformationWlc.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-id.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-legacy.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-legacyBfacf.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-mmchain.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-pseudorandom.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-regularNgon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/testRecombo-zAnalyzer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/zAnalyzer.Po@am__quote@ # am--include-marker
@@ -846,7 +814,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/tests/$(DEPDIR)/sampleTests-testFramework.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/tests/$(DEPDIR)/testRecombo-argprocessorTests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/tests/$(DEPDIR)/testRecombo-clkTests.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/tests/$(DEPDIR)/testRecombo-randomTests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/tests/$(DEPDIR)/testRecombo-recomboCriteriaTests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/tests/$(DEPDIR)/testRecombo-testFramework.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/tests/$(DEPDIR)/testRecombo-unitTestMain.Po@am__quote@ # am--include-marker
@@ -1047,20 +1014,6 @@ src/sampleTests-conformationAsList.obj: src/conformationAsList.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -c -o src/sampleTests-conformationAsList.obj `if test -f 'src/conformationAsList.cpp'; then $(CYGPATH_W) 'src/conformationAsList.cpp'; else $(CYGPATH_W) '$(srcdir)/src/conformationAsList.cpp'; fi`
 
-src/sampleTests-conformationWlc.o: src/conformationWlc.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -MT src/sampleTests-conformationWlc.o -MD -MP -MF src/$(DEPDIR)/sampleTests-conformationWlc.Tpo -c -o src/sampleTests-conformationWlc.o `test -f 'src/conformationWlc.cpp' || echo '$(srcdir)/'`src/conformationWlc.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/sampleTests-conformationWlc.Tpo src/$(DEPDIR)/sampleTests-conformationWlc.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/conformationWlc.cpp' object='src/sampleTests-conformationWlc.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -c -o src/sampleTests-conformationWlc.o `test -f 'src/conformationWlc.cpp' || echo '$(srcdir)/'`src/conformationWlc.cpp
-
-src/sampleTests-conformationWlc.obj: src/conformationWlc.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -MT src/sampleTests-conformationWlc.obj -MD -MP -MF src/$(DEPDIR)/sampleTests-conformationWlc.Tpo -c -o src/sampleTests-conformationWlc.obj `if test -f 'src/conformationWlc.cpp'; then $(CYGPATH_W) 'src/conformationWlc.cpp'; else $(CYGPATH_W) '$(srcdir)/src/conformationWlc.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/sampleTests-conformationWlc.Tpo src/$(DEPDIR)/sampleTests-conformationWlc.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/conformationWlc.cpp' object='src/sampleTests-conformationWlc.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -c -o src/sampleTests-conformationWlc.obj `if test -f 'src/conformationWlc.cpp'; then $(CYGPATH_W) 'src/conformationWlc.cpp'; else $(CYGPATH_W) '$(srcdir)/src/conformationWlc.cpp'; fi`
-
 src/sampleTests-conformation.o: src/conformation.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -MT src/sampleTests-conformation.o -MD -MP -MF src/$(DEPDIR)/sampleTests-conformation.Tpo -c -o src/sampleTests-conformation.o `test -f 'src/conformation.cpp' || echo '$(srcdir)/'`src/conformation.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/sampleTests-conformation.Tpo src/$(DEPDIR)/sampleTests-conformation.Po
@@ -1116,20 +1069,6 @@ src/sampleTests-mmchain.obj: src/mmchain.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/mmchain.cpp' object='src/sampleTests-mmchain.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -c -o src/sampleTests-mmchain.obj `if test -f 'src/mmchain.cpp'; then $(CYGPATH_W) 'src/mmchain.cpp'; else $(CYGPATH_W) '$(srcdir)/src/mmchain.cpp'; fi`
-
-src/sampleTests-pseudorandom.o: src/pseudorandom.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -MT src/sampleTests-pseudorandom.o -MD -MP -MF src/$(DEPDIR)/sampleTests-pseudorandom.Tpo -c -o src/sampleTests-pseudorandom.o `test -f 'src/pseudorandom.cpp' || echo '$(srcdir)/'`src/pseudorandom.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/sampleTests-pseudorandom.Tpo src/$(DEPDIR)/sampleTests-pseudorandom.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/pseudorandom.cpp' object='src/sampleTests-pseudorandom.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -c -o src/sampleTests-pseudorandom.o `test -f 'src/pseudorandom.cpp' || echo '$(srcdir)/'`src/pseudorandom.cpp
-
-src/sampleTests-pseudorandom.obj: src/pseudorandom.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -MT src/sampleTests-pseudorandom.obj -MD -MP -MF src/$(DEPDIR)/sampleTests-pseudorandom.Tpo -c -o src/sampleTests-pseudorandom.obj `if test -f 'src/pseudorandom.cpp'; then $(CYGPATH_W) 'src/pseudorandom.cpp'; else $(CYGPATH_W) '$(srcdir)/src/pseudorandom.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/sampleTests-pseudorandom.Tpo src/$(DEPDIR)/sampleTests-pseudorandom.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/pseudorandom.cpp' object='src/sampleTests-pseudorandom.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -c -o src/sampleTests-pseudorandom.obj `if test -f 'src/pseudorandom.cpp'; then $(CYGPATH_W) 'src/pseudorandom.cpp'; else $(CYGPATH_W) '$(srcdir)/src/pseudorandom.cpp'; fi`
 
 src/sampleTests-regularNgon.o: src/regularNgon.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sampleTests_CXXFLAGS) $(CXXFLAGS) -MT src/sampleTests-regularNgon.o -MD -MP -MF src/$(DEPDIR)/sampleTests-regularNgon.Tpo -c -o src/sampleTests-regularNgon.o `test -f 'src/regularNgon.cpp' || echo '$(srcdir)/'`src/regularNgon.cpp
@@ -1369,20 +1308,6 @@ src/testRecombo-conformationAsList.obj: src/conformationAsList.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/testRecombo-conformationAsList.obj `if test -f 'src/conformationAsList.cpp'; then $(CYGPATH_W) 'src/conformationAsList.cpp'; else $(CYGPATH_W) '$(srcdir)/src/conformationAsList.cpp'; fi`
 
-src/testRecombo-conformationWlc.o: src/conformationWlc.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/testRecombo-conformationWlc.o -MD -MP -MF src/$(DEPDIR)/testRecombo-conformationWlc.Tpo -c -o src/testRecombo-conformationWlc.o `test -f 'src/conformationWlc.cpp' || echo '$(srcdir)/'`src/conformationWlc.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/testRecombo-conformationWlc.Tpo src/$(DEPDIR)/testRecombo-conformationWlc.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/conformationWlc.cpp' object='src/testRecombo-conformationWlc.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/testRecombo-conformationWlc.o `test -f 'src/conformationWlc.cpp' || echo '$(srcdir)/'`src/conformationWlc.cpp
-
-src/testRecombo-conformationWlc.obj: src/conformationWlc.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/testRecombo-conformationWlc.obj -MD -MP -MF src/$(DEPDIR)/testRecombo-conformationWlc.Tpo -c -o src/testRecombo-conformationWlc.obj `if test -f 'src/conformationWlc.cpp'; then $(CYGPATH_W) 'src/conformationWlc.cpp'; else $(CYGPATH_W) '$(srcdir)/src/conformationWlc.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/testRecombo-conformationWlc.Tpo src/$(DEPDIR)/testRecombo-conformationWlc.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/conformationWlc.cpp' object='src/testRecombo-conformationWlc.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/testRecombo-conformationWlc.obj `if test -f 'src/conformationWlc.cpp'; then $(CYGPATH_W) 'src/conformationWlc.cpp'; else $(CYGPATH_W) '$(srcdir)/src/conformationWlc.cpp'; fi`
-
 src/testRecombo-conformation.o: src/conformation.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/testRecombo-conformation.o -MD -MP -MF src/$(DEPDIR)/testRecombo-conformation.Tpo -c -o src/testRecombo-conformation.o `test -f 'src/conformation.cpp' || echo '$(srcdir)/'`src/conformation.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/testRecombo-conformation.Tpo src/$(DEPDIR)/testRecombo-conformation.Po
@@ -1438,20 +1363,6 @@ src/testRecombo-mmchain.obj: src/mmchain.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/mmchain.cpp' object='src/testRecombo-mmchain.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/testRecombo-mmchain.obj `if test -f 'src/mmchain.cpp'; then $(CYGPATH_W) 'src/mmchain.cpp'; else $(CYGPATH_W) '$(srcdir)/src/mmchain.cpp'; fi`
-
-src/testRecombo-pseudorandom.o: src/pseudorandom.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/testRecombo-pseudorandom.o -MD -MP -MF src/$(DEPDIR)/testRecombo-pseudorandom.Tpo -c -o src/testRecombo-pseudorandom.o `test -f 'src/pseudorandom.cpp' || echo '$(srcdir)/'`src/pseudorandom.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/testRecombo-pseudorandom.Tpo src/$(DEPDIR)/testRecombo-pseudorandom.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/pseudorandom.cpp' object='src/testRecombo-pseudorandom.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/testRecombo-pseudorandom.o `test -f 'src/pseudorandom.cpp' || echo '$(srcdir)/'`src/pseudorandom.cpp
-
-src/testRecombo-pseudorandom.obj: src/pseudorandom.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/testRecombo-pseudorandom.obj -MD -MP -MF src/$(DEPDIR)/testRecombo-pseudorandom.Tpo -c -o src/testRecombo-pseudorandom.obj `if test -f 'src/pseudorandom.cpp'; then $(CYGPATH_W) 'src/pseudorandom.cpp'; else $(CYGPATH_W) '$(srcdir)/src/pseudorandom.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/testRecombo-pseudorandom.Tpo src/$(DEPDIR)/testRecombo-pseudorandom.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/pseudorandom.cpp' object='src/testRecombo-pseudorandom.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/testRecombo-pseudorandom.obj `if test -f 'src/pseudorandom.cpp'; then $(CYGPATH_W) 'src/pseudorandom.cpp'; else $(CYGPATH_W) '$(srcdir)/src/pseudorandom.cpp'; fi`
 
 src/testRecombo-regularNgon.o: src/regularNgon.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/testRecombo-regularNgon.o -MD -MP -MF src/$(DEPDIR)/testRecombo-regularNgon.Tpo -c -o src/testRecombo-regularNgon.o `test -f 'src/regularNgon.cpp' || echo '$(srcdir)/'`src/regularNgon.cpp
@@ -1536,20 +1447,6 @@ src/tests/testRecombo-clkTests.obj: src/tests/clkTests.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/tests/clkTests.cpp' object='src/tests/testRecombo-clkTests.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/tests/testRecombo-clkTests.obj `if test -f 'src/tests/clkTests.cpp'; then $(CYGPATH_W) 'src/tests/clkTests.cpp'; else $(CYGPATH_W) '$(srcdir)/src/tests/clkTests.cpp'; fi`
-
-src/tests/testRecombo-randomTests.o: src/tests/randomTests.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/tests/testRecombo-randomTests.o -MD -MP -MF src/tests/$(DEPDIR)/testRecombo-randomTests.Tpo -c -o src/tests/testRecombo-randomTests.o `test -f 'src/tests/randomTests.cpp' || echo '$(srcdir)/'`src/tests/randomTests.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/tests/$(DEPDIR)/testRecombo-randomTests.Tpo src/tests/$(DEPDIR)/testRecombo-randomTests.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/tests/randomTests.cpp' object='src/tests/testRecombo-randomTests.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/tests/testRecombo-randomTests.o `test -f 'src/tests/randomTests.cpp' || echo '$(srcdir)/'`src/tests/randomTests.cpp
-
-src/tests/testRecombo-randomTests.obj: src/tests/randomTests.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/tests/testRecombo-randomTests.obj -MD -MP -MF src/tests/$(DEPDIR)/testRecombo-randomTests.Tpo -c -o src/tests/testRecombo-randomTests.obj `if test -f 'src/tests/randomTests.cpp'; then $(CYGPATH_W) 'src/tests/randomTests.cpp'; else $(CYGPATH_W) '$(srcdir)/src/tests/randomTests.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/tests/$(DEPDIR)/testRecombo-randomTests.Tpo src/tests/$(DEPDIR)/testRecombo-randomTests.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/tests/randomTests.cpp' object='src/tests/testRecombo-randomTests.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -c -o src/tests/testRecombo-randomTests.obj `if test -f 'src/tests/randomTests.cpp'; then $(CYGPATH_W) 'src/tests/randomTests.cpp'; else $(CYGPATH_W) '$(srcdir)/src/tests/randomTests.cpp'; fi`
 
 src/tests/testRecombo-recomboCriteriaTests.o: src/tests/recomboCriteriaTests.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testRecombo_CXXFLAGS) $(CXXFLAGS) -MT src/tests/testRecombo-recomboCriteriaTests.o -MD -MP -MF src/tests/$(DEPDIR)/testRecombo-recomboCriteriaTests.Tpo -c -o src/tests/testRecombo-recomboCriteriaTests.o `test -f 'src/tests/recomboCriteriaTests.cpp' || echo '$(srcdir)/'`src/tests/recomboCriteriaTests.cpp
@@ -1865,7 +1762,6 @@ distclean: distclean-am
 	-rm -f src/$(DEPDIR)/clkConformationSeqconvert.Po
 	-rm -f src/$(DEPDIR)/conformation.Po
 	-rm -f src/$(DEPDIR)/conformationAsList.Po
-	-rm -f src/$(DEPDIR)/conformationWlc.Po
 	-rm -f src/$(DEPDIR)/cross.Po
 	-rm -f src/$(DEPDIR)/homfly1_21.Po
 	-rm -f src/$(DEPDIR)/id.Po
@@ -1875,7 +1771,6 @@ distclean: distclean-am
 	-rm -f src/$(DEPDIR)/mmcMain.Po
 	-rm -f src/$(DEPDIR)/mmchain.Po
 	-rm -f src/$(DEPDIR)/polynomesAZ.Po
-	-rm -f src/$(DEPDIR)/pseudorandom.Po
 	-rm -f src/$(DEPDIR)/regularNgon.Po
 	-rm -f src/$(DEPDIR)/sampleTests-argprocessor.Po
 	-rm -f src/$(DEPDIR)/sampleTests-autocorr.Po
@@ -1889,12 +1784,10 @@ distclean: distclean-am
 	-rm -f src/$(DEPDIR)/sampleTests-clkConformationSeqconvert.Po
 	-rm -f src/$(DEPDIR)/sampleTests-conformation.Po
 	-rm -f src/$(DEPDIR)/sampleTests-conformationAsList.Po
-	-rm -f src/$(DEPDIR)/sampleTests-conformationWlc.Po
 	-rm -f src/$(DEPDIR)/sampleTests-id.Po
 	-rm -f src/$(DEPDIR)/sampleTests-legacy.Po
 	-rm -f src/$(DEPDIR)/sampleTests-legacyBfacf.Po
 	-rm -f src/$(DEPDIR)/sampleTests-mmchain.Po
-	-rm -f src/$(DEPDIR)/sampleTests-pseudorandom.Po
 	-rm -f src/$(DEPDIR)/sampleTests-regularNgon.Po
 	-rm -f src/$(DEPDIR)/sampleTests-zAnalyzer.Po
 	-rm -f src/$(DEPDIR)/testRecombo-argprocessor.Po
@@ -1909,12 +1802,10 @@ distclean: distclean-am
 	-rm -f src/$(DEPDIR)/testRecombo-clkConformationSeqconvert.Po
 	-rm -f src/$(DEPDIR)/testRecombo-conformation.Po
 	-rm -f src/$(DEPDIR)/testRecombo-conformationAsList.Po
-	-rm -f src/$(DEPDIR)/testRecombo-conformationWlc.Po
 	-rm -f src/$(DEPDIR)/testRecombo-id.Po
 	-rm -f src/$(DEPDIR)/testRecombo-legacy.Po
 	-rm -f src/$(DEPDIR)/testRecombo-legacyBfacf.Po
 	-rm -f src/$(DEPDIR)/testRecombo-mmchain.Po
-	-rm -f src/$(DEPDIR)/testRecombo-pseudorandom.Po
 	-rm -f src/$(DEPDIR)/testRecombo-regularNgon.Po
 	-rm -f src/$(DEPDIR)/testRecombo-zAnalyzer.Po
 	-rm -f src/$(DEPDIR)/zAnalyzer.Po
@@ -1924,7 +1815,6 @@ distclean: distclean-am
 	-rm -f src/tests/$(DEPDIR)/sampleTests-testFramework.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-argprocessorTests.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-clkTests.Po
-	-rm -f src/tests/$(DEPDIR)/testRecombo-randomTests.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-recomboCriteriaTests.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-testFramework.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-unitTestMain.Po
@@ -1991,7 +1881,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/$(DEPDIR)/clkConformationSeqconvert.Po
 	-rm -f src/$(DEPDIR)/conformation.Po
 	-rm -f src/$(DEPDIR)/conformationAsList.Po
-	-rm -f src/$(DEPDIR)/conformationWlc.Po
 	-rm -f src/$(DEPDIR)/cross.Po
 	-rm -f src/$(DEPDIR)/homfly1_21.Po
 	-rm -f src/$(DEPDIR)/id.Po
@@ -2001,7 +1890,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/$(DEPDIR)/mmcMain.Po
 	-rm -f src/$(DEPDIR)/mmchain.Po
 	-rm -f src/$(DEPDIR)/polynomesAZ.Po
-	-rm -f src/$(DEPDIR)/pseudorandom.Po
 	-rm -f src/$(DEPDIR)/regularNgon.Po
 	-rm -f src/$(DEPDIR)/sampleTests-argprocessor.Po
 	-rm -f src/$(DEPDIR)/sampleTests-autocorr.Po
@@ -2015,12 +1903,10 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/$(DEPDIR)/sampleTests-clkConformationSeqconvert.Po
 	-rm -f src/$(DEPDIR)/sampleTests-conformation.Po
 	-rm -f src/$(DEPDIR)/sampleTests-conformationAsList.Po
-	-rm -f src/$(DEPDIR)/sampleTests-conformationWlc.Po
 	-rm -f src/$(DEPDIR)/sampleTests-id.Po
 	-rm -f src/$(DEPDIR)/sampleTests-legacy.Po
 	-rm -f src/$(DEPDIR)/sampleTests-legacyBfacf.Po
 	-rm -f src/$(DEPDIR)/sampleTests-mmchain.Po
-	-rm -f src/$(DEPDIR)/sampleTests-pseudorandom.Po
 	-rm -f src/$(DEPDIR)/sampleTests-regularNgon.Po
 	-rm -f src/$(DEPDIR)/sampleTests-zAnalyzer.Po
 	-rm -f src/$(DEPDIR)/testRecombo-argprocessor.Po
@@ -2035,12 +1921,10 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/$(DEPDIR)/testRecombo-clkConformationSeqconvert.Po
 	-rm -f src/$(DEPDIR)/testRecombo-conformation.Po
 	-rm -f src/$(DEPDIR)/testRecombo-conformationAsList.Po
-	-rm -f src/$(DEPDIR)/testRecombo-conformationWlc.Po
 	-rm -f src/$(DEPDIR)/testRecombo-id.Po
 	-rm -f src/$(DEPDIR)/testRecombo-legacy.Po
 	-rm -f src/$(DEPDIR)/testRecombo-legacyBfacf.Po
 	-rm -f src/$(DEPDIR)/testRecombo-mmchain.Po
-	-rm -f src/$(DEPDIR)/testRecombo-pseudorandom.Po
 	-rm -f src/$(DEPDIR)/testRecombo-regularNgon.Po
 	-rm -f src/$(DEPDIR)/testRecombo-zAnalyzer.Po
 	-rm -f src/$(DEPDIR)/zAnalyzer.Po
@@ -2050,7 +1934,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/tests/$(DEPDIR)/sampleTests-testFramework.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-argprocessorTests.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-clkTests.Po
-	-rm -f src/tests/$(DEPDIR)/testRecombo-randomTests.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-recomboCriteriaTests.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-testFramework.Po
 	-rm -f src/tests/$(DEPDIR)/testRecombo-unitTestMain.Po

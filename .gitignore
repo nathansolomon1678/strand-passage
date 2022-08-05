@@ -11,6 +11,10 @@ README
 NEWS
 AUTHORS
 
+# KnotPlot configuration files
+knotplot_layout.kps
+knotplotrc.kps
+
 # Build results
 
 [Dd]ebug/

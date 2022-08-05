@@ -13,7 +13,6 @@
 #include <bfacfProbabilities.h>
 #include <bfacfProbabilitiesFromZ.h>
 #include <bfacfProbabilitiesFromZFixed.h>
-#include <pseudorandom.h>
 
 #include <sstream>
 #include <iostream>

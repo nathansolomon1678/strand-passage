@@ -132,35 +132,6 @@ void set_sRand_seed_to_clocktime()
 // Reuben Brasher: the following added so that we can save the state of random
 // number generator.
 
-#include "pseudorandom.h"
-
-pseudorandom saveRandomState()
-{
-   pseudorandom r;
-   r.current = _Rand__SEED;
-   r.a = _Rand_a;
-   r.m = _Rand_m;
-   r.q = _Rand_q;
-   r.r = _Rand_r;
-   r.lo = _Rand_lo;
-   r.hi = _Rand_hi;
-   r.test = _Rand_test;
-
-   return r;
-}
-
-void copyRandomState(const pseudorandom& r)
-{
-   _Rand__SEED = r.current;
-   _Rand_a = r.a;
-   _Rand_m = r.m;
-   _Rand_q = r.q;
-   _Rand_r = r.r;
-   _Rand_lo = r.lo;
-   _Rand_hi = r.hi;
-   _Rand_test = r.test;
-}
-
 // From sequence convert project vectory.cpp
 
 static char comment [108];
@@ -280,50 +251,6 @@ int equal_vector_within_epsilon(vector3 a, vector3 b)
    vector3 hypergumby;
    sub_vector(hypergumby, a, b);
    return is_a_zero_vector(hypergumby);
-}
-
-/*
-Function returns a random point uniformly distributed
-on a sphere.  Not really a great method to use.
- */
-
-/*    // NOTE: use random_unit_vector () instead
-void rand_sphere (real *theta, real *phi) {
- *theta = acos ((double) (2.0 * rand_uniform () - 1.0));
- *phi   = TWOPI * rand_uniform ();
-}
- */
-
-void random_unit_vector_cone(vector3 v, real alpha)
-{ // full angle of the cone
-   real theta, phi;
-
-   //theta = acos (rand_real ((cos (alpha) + 1.0) * 0.5, 1.0));
-   theta = acos(rand_real(cos(alpha * 0.5), 1.0));
-   phi = TWOPI * rand_uniform();
-   unit_vector(theta, phi, v);
-}
-
-void random_unit_vector(vector3 v)
-{
-   // creates a unit vector3 in a random direction
-   // this method is fine in 3D, don't use in higher dimensions
-   real dist;
-   do
-   { // loop until fall inside unit sphere
-      v [0] = rand_real(-1.0, 1.0);
-      v [1] = rand_real(-1.0, 1.0);
-      v [2] = rand_real(-1.0, 1.0);
-   }
-   while (v [0] * v [0] + v [1] * v [1] + v [2] * v [2] > 1.0);
-   normal_vector(v, v);
-}
-
-void random_vector(vector3 v, real mag)
-{
-   v [0] = rand_real(-mag, mag);
-   v [1] = rand_real(-mag, mag);
-   v [2] = rand_real(-mag, mag);
 }
 
 void zero_vector(vector3 v)
@@ -662,20 +589,6 @@ void conv_to_xyz(vector3 vert, real radius, real theta, real phi)
    vert [0] = radius * sin(theta) * cos(phi);
    vert [1] = radius * sin(theta) * sin(phi);
    vert [2] = radius * cos(theta);
-}
-
-void random_orthonormal_triad(vector3 uhat, vector3 vhat, vector3 what)
-{
-   // creates a randomly oriented orthonormal triad
-   vector3 u, v;
-   real theta;
-   random_unit_vector(what);
-   make_orthonormal_triad(u, v, what);
-   theta = rand_real(0.0, (real) TWOPI);
-   mult_vector(u, u, cos(theta));
-   mult_vector(v, v, sin(theta));
-   add_vector(uhat, u, v);
-   cross(vhat, what, uhat);
 }
 
 void shift_vector(vector3 v, int s)

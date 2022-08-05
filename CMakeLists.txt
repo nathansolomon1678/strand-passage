@@ -10,8 +10,6 @@ set(TEST_SOURCE_FILES
         src/tests/basicTests.h
         src/tests/clkTests.cpp
         src/tests/clkTests.h
-        src/tests/randomTests.cpp
-        src/tests/randomTests.h
         src/tests/recomboCriteriaTests.cpp
         src/tests/recomboCriteriaTests.h
         src/tests/sampleUnitTests.cpp
@@ -43,8 +41,6 @@ set(SHARED_SOURCE_FILES
         src/conformation.h
         src/conformationAsList.cpp
         src/conformationAsList.h
-        src/conformationWlc.cpp
-        src/conformationWlc.h
         src/genericConformation.h
         src/id.cpp
         src/id.h
@@ -57,8 +53,6 @@ set(SHARED_SOURCE_FILES
         src/mmchain.h
         src/polynomesAZ.c
         src/polynomesAZ.h
-        src/pseudorandom.cpp
-        src/pseudorandom.h
         src/recomboArgprocessor.cpp
         src/recomboArgprocessor.h
         src/recomboFromFile.cpp

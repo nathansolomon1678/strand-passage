@@ -11,7 +11,6 @@
 #include <bfacfProbabilities.h>
 #include <bfacfProbabilitiesFromZ.h>
 #include <bfacfProbabilitiesFromZFixed.h>
-#include <pseudorandom.h>
 
 #include <sstream>
 
@@ -486,9 +485,6 @@ bool testBfacf3SetZ()
 }
 
 extern void set_sRand_seed_to_clocktime();
-extern int rand_integer(int, int);
-extern double rand_double(double low, double high);
-extern double rand_uniform();
 extern void sRandSimple(int seed);
 
 bool testReadFromText()

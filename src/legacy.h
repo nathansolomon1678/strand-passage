@@ -71,9 +71,6 @@ extern void set_vector (vector3, real, real, real);
 extern void unit_vector (real, real, vector3);
 extern int equal_vector (vector3, vector3);
 extern int equal_vector_within_epsilon (vector3, vector3);
-extern void random_unit_vector (vector3);
-//extern void random_unit_vector2 (vector3);
-extern void random_vector (vector3, real);
 extern void zero_vector (vector3);
 extern void cross (vector3, vector3, vector3);
 extern void perp_vector (vector3, vector3);
@@ -87,7 +84,6 @@ extern void normalize_vector (vector3, vector3);
 extern void interp_vector (vector3, vector3, vector3, real);
 extern real interp_real (real, real, real);
 extern void make_orthonormal_triad (vector3, vector3, vector3);
-extern void random_orthonormal_triad (vector3, vector3, vector3);
 extern void shift_vector (vector3, int);
 extern void change_coord_system_inv (vector3, vector3, 
 				     vector3, vector3, vector3);
@@ -98,8 +94,6 @@ extern int is_a_zero_vector (vector3);
 extern int is_a_unit_vector (vector3);
 
 extern void new_normal_vector (vector3, vector3, int, char *);
-extern void random_unit_vector_cone (vector3 v, real angle);
-extern void test_random_unit_vector (int, int);
 extern void print_vector_a (FILE *, vector3);
 extern void print_vector (vector3);
 extern void put_vector (vector3);

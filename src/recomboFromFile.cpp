@@ -4,8 +4,6 @@
 #include <sstream>
 #include <vector>
 
-using namespace std;
-
 recomboFromFile::recomboFromFile(int Min_arc, int Max_arc, char* Infile, char* Outfile, int N_components, char Read_mode, int Sampling_mode, int Block_file_mode, bool Supress_output, bool Info_mode, int Seed, int Sequence_type, int Recombo_type){
 	//set operating variables
 	supress_output = Supress_output;
@@ -18,12 +16,12 @@ recomboFromFile::recomboFromFile(int Min_arc, int Max_arc, char* Infile, char* O
 	block_file_mode = Block_file_mode;
 	seed = Seed;
 
-    if (seed != 0){
-		siteSelector.sRandSimple(seed);
+    if (seed != 0) {
+        std::srand(seed);
 	}
 	else{
 		seed = time(NULL);
-		cout << "seed set to current system time: " << seed << endl;
+		std::cout << "seed set to current system time: " << seed << std::endl;
 	}
 	//initialize infile_name and current_block_file_number, for use with block_file_mode == 1
 	infile_name = new string(Infile);
@@ -54,9 +52,9 @@ recomboFromFile::recomboFromFile(int Min_arc, int Max_arc, char* Infile, char* O
 
 	n_components = N_components;
 	if (!in->good())
-		{cout << "Error reading input file" << endl; exit(3);}
+		{std::cout << "Error reading input file" << std::endl; exit(3);}
 	if (!out->good())
-		{cout << "Error creating output file" << endl; exit(3);}
+		{std::cout << "Error creating output file" << std::endl; exit(3);}
 }
 
 bool recomboFromFile::inc_filename(){
@@ -110,13 +108,13 @@ void recomboFromFile::do_recombo(){
 		sampling_mode = -1;
 	}
 	if (n_components == 1){
-		cout << "doing recombo knots" << endl; 
+		std::cout << "doing recombo knots" << std::endl; 
 		do_recombo_knots();}
 	else if (n_components == 2){
-		cout << "doing recombo links" << endl;
+		std::cout << "doing recombo links" << std::endl;
 		do_recombo_links();}
 	else{
-	cout << endl << "error: Links with > 2 components are not currently supported by this software" << endl;
+	std::cout << std::endl << "error: Links with > 2 components are not currently supported by this software" << endl;
 	exit(2);
 	}
 }
@@ -150,7 +148,7 @@ void recomboFromFile::do_recombo_knots(){
 	while (read_comp_knots(in) && sampling_mode != 0){
 		sites = 0;
 		if (!supress_output){
-			cout << '\r' << "test Attempting Recombination: " << ++attempts << " Performed: " << count;
+			std::cout << '\r' << "test Attempting Recombination: " << ++attempts << " Performed: " << count;
 		}
 		knot = new clkConformationBfacf3(initialComp0);
 		//need to create new countRecomboSites function that is ideal for use with mmc
@@ -162,7 +160,7 @@ void recomboFromFile::do_recombo_knots(){
 		if(sites > 0){
 			list<clkConformationAsList> components;
             //choice is the chosen site to perform recombo. Want to output this file
-			choice = siteSelector.rand_integer(0, sites); //sites, NOT sites-1
+			choice = std::rand(0, sites); //sites, NOT sites-1
 
 			//write sites file
             writeSitesFile(knot, choice);
@@ -188,13 +186,13 @@ void recomboFromFile::do_recombo_knots(){
 		delete knot;
 	}
 	//report on current file
-	cout << "\nPerformed "<<count<<" recombinations on "<<attempts<< " conformations in file "<< get_current_filename() << endl;
+	std::cout << "\nPerformed "<<count<<" recombinations on "<<attempts<< " conformations in file "<< get_current_filename() << std::endl;
 	double sum = 0;
 	for (int i=0; i < lengths.size(); i++){
         sum += lengths[i];
 	}
-	cout << "Length " << min_arc + max_arc << " conformations so far: " << length_counter << endl;
-	cout << "Average length so far: " << sum / lengths.size() << endl;
+	std::cout << "Length " << min_arc + max_arc << " conformations so far: " << length_counter << std::endl;
+	std::cout << "Average length so far: " << sum / lengths.size() << std::endl;
 	if (block_file_mode == 1){
 		//copy current file statistics into totals
 		total_attempts += attempts;
@@ -208,7 +206,7 @@ void recomboFromFile::do_recombo_knots(){
 		}
 		else{
 			//next block file does not exist, report statistics for all blocks
-			cout << "\nPerformed " << total_count << " recombinations on " << total_attempts << " conformations." << endl;
+			std::cout << "\nPerformed " << total_count << " recombinations on " << total_attempts << " conformations." << std::endl;
 		}
 	}
 }
@@ -221,7 +219,7 @@ TOP:
 	while (read_comp_knots(in) && sampling_mode != 0){
 		sites = 0;
 		if (!supress_output){
-			cout << '\r' << "test Attempting Recombination: " << ++attempts << " Performed: " << count;
+			std::cout << '\r' << "test Attempting Recombination: " << ++attempts << " Performed: " << count;
 		}
 		//knot.
 		knot = new clkConformationBfacf3(initialComp0);
@@ -237,7 +235,7 @@ TOP:
 		/*stringstream ss;
 		ss << sites << '\n';
 		sites_file->write(ss.str().c_str(),5);*/
-		cout << sites << '\n';
+		std::cout << sites << '\n';
 		for (int i=0; i < sites; i++){
 			list<clkConformationAsList> components;
 			knot->performRecombination(*out, sequence_type, recombo_type, 1, i);
@@ -253,13 +251,13 @@ TOP:
 		delete knot;
 	}
 	//report on current file
-	cout << "\nPerformed " << count << " recombinations on " << attempts << " conformations in file " << get_current_filename() << endl;
+	std::cout << "\nPerformed " << count << " recombinations on " << attempts << " conformations in file " << get_current_filename() << std::endl;
 	double sum = 0;
 	for (int i = 0; i < lengths.size(); i++){
 		sum += lengths[i];
 	}
-	//cout << "Length " << min_arc + max_arc << " conformations so far: " << length_counter << endl;
-	//cout << "Average length so far: " << sum / lengths.size() << endl;
+	//std::cout << "Length " << min_arc + max_arc << " conformations so far: " << length_counter << std::endl;
+	//std::cout << "Average length so far: " << sum / lengths.size() << std::endl;
 	if (block_file_mode == 1){
 		//copy current file statistics into totals
 		total_attempts += attempts;
@@ -273,7 +271,7 @@ TOP:
 		}
 		else{
 			//next block file does not exist, report statistics for all blocks
-			cout << "\nPerformed " << total_count << " recombinations on " << total_attempts << " conformations." << endl;
+			std::cout << "\nPerformed " << total_count << " recombinations on " << total_attempts << " conformations." << std::endl;
 		}
 	}
 }
@@ -287,7 +285,7 @@ void recomboFromFile::do_recombo_links(){
 	while (read_comp_links(in) && sampling_mode != 0){
 	    sites = 0;
 		if (!supress_output){
-			cout << '\r' << "test Attempting Recombination: " << ++attempts << " Performed: " << count;
+			std::cout << '\r' << "test Attempting Recombination: " << ++attempts << " Performed: " << count;
 		}
 		knot = new clkConformationBfacf3(initialComp0, initialComp1);
 		//need to create new countRecomboSites function that is ideal for use with mmc
@@ -303,7 +301,7 @@ void recomboFromFile::do_recombo_links(){
 
 		if(sites > 0){
 			list<clkConformationAsList> components;
-			choice = siteSelector.rand_integer(0, sites-1);
+			choice = std::rand(0, sites-1);
 
 			//write sites file
 			writeSitesFile(knot, choice);
@@ -329,13 +327,13 @@ void recomboFromFile::do_recombo_links(){
 		delete knot;
 	}
 	//report on current file
-	cout << "\nPerformed " << count << " recombinations on " << attempts << " conformations in file " << get_current_filename() << endl;
+	std::cout << "\nPerformed " << count << " recombinations on " << attempts << " conformations in file " << get_current_filename() << std::endl;
 	double sum = 0;
 	for (int i=0; i < lengths.size(); i++){
         sum += lengths[i];
 	}
-	cout << "Length " << min_arc + max_arc << " conformations so far: " << length_counter << endl;
-	cout << "Average length so far: " << sum / lengths.size() << endl;
+	std::cout << "Length " << min_arc + max_arc << " conformations so far: " << length_counter << std::endl;
+	std::cout << "Average length so far: " << sum / lengths.size() << std::endl;
 	if (block_file_mode == 1){
 		//copy current file statistics into totals
 		total_attempts += attempts;
@@ -349,7 +347,7 @@ void recomboFromFile::do_recombo_links(){
 		}
 		else{
 			//next block file does not exist, report statistics for all blocks
-			cout << "\nPerformed " << total_count << " recombinations on " << total_attempts << " conformations." << endl;
+			std::cout << "\nPerformed " << total_count << " recombinations on " << total_attempts << " conformations." << std::endl;
 		}
 	}
 }

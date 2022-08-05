@@ -2,7 +2,6 @@
 
 #include "argprocessorTests.h"
 #include "clkTests.h"
-#include "randomTests.h"
 #include "recomboCriteriaTests.h"
 
 using namespace std;
@@ -27,9 +26,6 @@ int main(void)
 	suite.add_test(testBfacf3SetZ, "testBfacf3SetZ");
 	//suite.add_test(testBfacf3CountEdges, "testBfacf3CountEdges"); //incomplete 
 
-	suite.add_test(testRandom, "raw sequence for pseudorandom number generator", "", 
-		"Random number generator fails to produce expected sequence.");
-	suite.add_test(testRandomInteger, "pseudorandom integers");
 	suite.add_test(testPrecomputedBfacf3Probs, "Precomputed BFACF probabilities");
 	suite.add_test(testBfacf3ProbsHandComputed, "Compare computed BFACF probabilities vs hand computed");
 	// TODO: RB had to comment next line because of Segmentation fault 11

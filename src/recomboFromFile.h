@@ -6,7 +6,6 @@
 
 #include "clkConformationAsList.h"
 #include "clkConformationBfacf3.h"
-#include "pseudorandom.h"
 
 class recomboFromFile{
 private:
@@ -19,7 +18,6 @@ private:
 	clkConformationAsList initialComp0, initialComp1;
 	clkConformationAsList recomboSites;
 	clkConformationBfacf3* knot;
-	pseudorandom siteSelector;
 	ifstream* in;
 	ofstream* out, *info_file, *sites_file;
 	void writeSitesFile(clkConformationBfacf3* clk, int site_choice);
