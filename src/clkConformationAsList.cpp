@@ -1,10 +1,3 @@
-/* 
- * File:   clkConformationAsList.cpp
- * Author: kmo
- * 
- * Created on December 4, 2012, 3:04 PM
- */
-
 #include "clkConformationAsList.h"
 
 #include "genericConformation.h"
@@ -12,8 +5,6 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-
-using namespace std;
 
 clkConformationAsList::clkConformationAsList() { }
 
@@ -42,9 +33,8 @@ clkConformationAsList::clkConformationAsList(const clkConformationAsList& orig) 
 
 clkConformationAsList::~clkConformationAsList() { }
 
-int clkConformationAsList::size() const
-{
-   return data.size();
+int clkConformationAsList::size() const {
+    return data.size();
 }
 
 // this function is not efficient
@@ -173,25 +163,21 @@ bool clkConformationAsList::lineIsVertex(std::string line)
    return count == 3;
 }
 
-bool clkConformationAsList::readFromCoords(std::istream& is)
-{
-   clear();
-   if (!is) return false;
+bool clkConformationAsList::readFromCoords(std::istream& is) {
+    clear();
+    if (!is) { return false; }
 
-   string line;
-   stringstream singleLine;
+    string line;
+    stringstream singleLine;
 
-   getline(is, line);
-   while (lineIsVertex(line))
-   {
-      singleLine << line << " ";
-      getline(is, line);
-      if (!is) break;
-   }
+    getline(is, line);
+    while (lineIsVertex(line)) {
+        singleLine << line << " ";
+        getline(is, line);
+        if (!is) { break; }
+    }
 
-   //   cout << singleLine.str() << endl;
-
-   return readFromText(singleLine);
+    return readFromText(singleLine);
 }
 
 

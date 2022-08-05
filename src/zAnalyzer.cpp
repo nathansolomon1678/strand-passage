@@ -1,28 +1,20 @@
 #include "zAnalyzer.h"
 
-Analyzer::Analyzer(char* filename, double Init_lower, double Init_upper, int warmup, int C_steps, int Q) {
-	add_initial_conformation_from_file(filename);
-	init_lower = Init_lower;
-	init_upper = Init_upper;
-	w = warmup;
-	c_steps = C_steps;
+Analyzer::Analyzer(char* filename, int warmup, int C_steps, int Q) {
+    knot_filename = filename;
+	num_warmup_steps = warmup;
+	steps_between_samples = C_steps;
 	q = Q;
+    z_guess = .18;
+    num_samples = 1000;
 }
 
 bool Analyzer::add_initial_conformation(istream& is) {
-	if (!initialComp0.readFromCoords(is)) {
+    clkConformationAsList initial_conformation;
+	if (!initial_conformation.readFromCoords(is)) {
         return false;
     }
-	n_components = 1;
-    if (initialComp1.readFromCoords(is)) {
-        n_components = 2;
-    }
-    if (n_components == 2) {
-        knot = new clkConformationBfacf3(initialComp0, initialComp1);
-    } else if (n_components == 1) {
-        knot = new clkConformationBfacf3(initialComp0);
-    }
-    knot->setZ(0);
+    knot = new clkConformationBfacf3(initial_conformation);
     return true;
 }
 
@@ -36,33 +28,8 @@ bool Analyzer::add_initial_conformation_from_file(char* filename){
 	return add_initial_conformation(in);
 }
 
-bool Analyzer::z_from_length(double target_in, double mean_tol){
-	target = target_in;
-    std::cout << "\nInitializing Search..." << std::endl;
-	initialize_search(mean_tol);
-	// While the target is outside the guess window
-	while (guess.center - guess.std_dev > target + mean_tol || guess.center + guess.std_dev < target - mean_tol) {
-        std::cout << "=========================================================================\n"
-                  << "Current Z-vals: " << min.z << "(" << min.center << ")  "
-                  << guess.z << "(" << guess.center << ")  " << max.z << "(" << max.center << ")\n"
-                  << "=========================================================================" << std::endl;
-		if (target < guess.center) {
-			max = guess;
-			guess.z = exp((log(min.z) + log(guess.z)) / 2.);
-			length_from_z(&guess);
-			check_overlap();
-		} else if (target > guess.center){
-			min = guess;
-			guess.z = exp((log(max.z) + log(guess.z)) / 2.);
-			length_from_z(&guess);
-			check_overlap();
-		}
-	}
-    std::cout << "\nZ: " << guess.z << " Q: " << q << "Avg Length: " << guess.center << endl;
-	return true;
-}
-
 void Analyzer::get_knot_length(double& mean, double& std_dev, double z, double q, int num_samples, int steps_between_samples, int num_warmup_steps) {
+	add_initial_conformation_from_file(knot_filename);
     std::vector<int> knot_lengths;
     // Telling the clkConformationBfacf3 object (*knot) what the z value is now,
     // instead of only specifying the z value in stepQ, allows it to precompute
@@ -76,94 +43,37 @@ void Analyzer::get_knot_length(double& mean, double& std_dev, double z, double q
     }
     
     // Compute the mean and standard deviation
+    // Note that this is the standard deviation of the sample means,
+    // which is the standard deviation of the knot lengths divided by
+    // the square root of the number of samples
     int total = 0;
 	for (int i = 0; i < num_samples; ++i) {
 		total += knot_lengths[i];
 	}
-	mean = (double) total / num_samples;
+	mean = (double) total / (double) num_samples;
 
-    double variance = 0;
+    double total_squared_error = 0;
 	for (int i = 0; i < num_samples; i++){
-		variance += pow(mean - knot_lengths[i], 2) / num_samples;
+		total_squared_error += pow(mean - (double) knot_lengths[i], 2);
 	}
-	std_dev = sqrt(variance / num_samples);
+	std_dev = sqrt(total_squared_error) / num_samples;
 
-    std::cout << "With z=" << z << ", the mean knot length is " << mean
-              << " and the standard deviation of the knot lengths is " << std_dev << std::endl;
+    std::cout << "With z=" << z << " and " << num_samples << " samples, the mean knot length is " << mean
+              << " +/- " << 2. * std_dev << std::endl;
 }
 
-bool Analyzer::length_from_z(search_data* in) {
-    get_knot_length(in->center, in->std_dev, in->z, q, in->n, c_steps, w);
-}
+void Analyzer::optimize(double target_length, double tolerance) {
+    double mean_length, std_dev_length;
+    get_knot_length(mean_length, std_dev_length, z_guess, q, num_samples, steps_between_samples, num_warmup_steps);
 
-bool Analyzer::initialize_search(double mean_tol){
-    // RESET
-	min.center = min.std_dev = 0;
-	guess.center = guess.std_dev = 0;
-	max.center = max.std_dev;
-	min.n = guess.n = max.n = 10000;
-	min.std_dev_tol = guess.std_dev_tol = 25;
-
-	//double init_lower = .1, init_upper = CRITICAL_Z;
-	search_data temp;
-	min.z = init_lower;
-	max.z = init_upper;
-	guess.z = exp((log(max.z) + log(min.z)) / 2);
-    std::cout << "Warming up with " << w << " steps" << std::endl;
-	length_from_z(&min);
-	knot->stepQ(w, q, max.z);
-	length_from_z(&max);
-	while (max.center < target){
-		q += 1;
-	    length_from_z(&guess);
-	}
-	
-	check_overlap();
-	return true;
-}
-
-bool Analyzer::check_overlap() {
-	search_data temp;
-    std::cout << "Checking overlap..." << std::endl;
-	while (guess.center + guess.std_dev >= max.center - max.std_dev){
-		guess.std_dev_tol /= 2;
-		length_from_z(&guess);
-		if (guess.center + guess.std_dev >= max.center - max.std_dev) {
-		    max.std_dev_tol /= 2;
-		    length_from_z(&max);
+	while (mean_length - 2. * std_dev_length < target_length - tolerance
+        || mean_length + 2. * std_dev_length > target_length + tolerance) {
+        // So long as the length is not yet close enough to the target length,
+        // continue trying to optimize
+        if (mean_length <= target_length && tolerance <= 2. * std_dev_length) {
+            num_samples = (int) num_samples * pow(2. * std_dev_length / tolerance, 2);
         }
-		while (min.center + min.std_dev >= guess.center - guess.std_dev) {
-			min.std_dev_tol /= 2;
-			length_from_z(&min);
-			if (min.center + min.std_dev >= guess.center - guess.std_dev) {
-			    guess.std_dev_tol /= 2;
-			    length_from_z(&guess);
-            }
-			if (max.center < min.center) {
-				temp = min;
-				min = max;
-				max = temp;
-			}
-			if (min.center > guess.center) {
-				temp = min;
-				min = guess;
-				guess = temp;
-			}
-			if (max.center < guess.center) {
-				temp = guess;
-				guess = max;
-				max = temp;
-			}
-			// if the target goes out of range of the search, purturbs the z values until it comes back into range
-			while (min.center > target){
-				min.z -= .0025;
-				length_from_z(&min);
-			}
-			while (max.center < target){
-				max.z += .0025;
-				length_from_z(&max);
-			}
-		}
-		return true;
+        z_guess += z_guess * (1. - z_guess / CRITICAL_Z) * (2. / (1. + mean_length / target_length) - 1.);
+        get_knot_length(mean_length, std_dev_length, z_guess, q, num_samples, steps_between_samples, num_warmup_steps);
 	}
 }
