@@ -2,11 +2,11 @@ AM_CXXFLAGS = -g -fpermissive -std=c++11
 AM_CFLAGS =
 AM_LDFLAGS =
 
-all: mmc zAnalyzer idknot homfly xinger testRecombo sampleTests test 
+all: mmc zAnalyzer idknot homfly xinger
 
-bin_PROGRAMS = mmc zAnalyzer idknot homfly xinger testRecombo sampleTests  
+bin_PROGRAMS = mmc zAnalyzer idknot homfly xinger
 
-obj_src = src/argprocessor.cpp src/autocorr.cpp src/clk.cpp src/clkCigar.cpp src/clkConformationAsList.cpp src/clkConformationSeqconvert.cpp src/conformationAsList.cpp src/conformation.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp
+obj_src = src/argprocessor.cpp src/autocorr.cpp src/CLK.cpp src/conformationAsList.cpp src/conformation.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp src/vertex.cpp
 
 mmc_SOURCES = $(obj_src) src/mmcMain.cpp
 
@@ -18,14 +18,5 @@ homfly_SOURCES = $(obj_src) src/cross.c src/polynomesAZ.c src/homfly1_21.c
 
 xinger_SOURCES = src/xinger/main.cpp src/xinger/random.cpp src/xinger/util.cpp src/xinger/xinger.cpp
 
-testRecombo_SOURCES = $(obj_src) src/tests/testFramework.cpp src/tests/argprocessorTests.cpp src/tests/clkTests.cpp src/tests/recomboCriteriaTests.cpp src/tests/unitTestMain.cpp
-testRecombo_CXXFLAGS = $(AM_CXXFLAGS) -Isrc
-
-sampleTests_SOURCES = $(obj_src) src/tests/testFramework.cpp src/tests/sampleUnitTestMain.cpp src/tests/sampleUnitTests.cpp 
-sampleTests_CXXFLAGS = $(AM_CXXFLAGS) -Isrc
-
 ACLOCAL_AMFLAGS = -I m4 --install
 EXTRA_DIST = m4/NOTES
-
-test: testRecombo 
-	./testRecombo

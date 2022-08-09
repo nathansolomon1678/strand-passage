@@ -9,34 +9,36 @@ Analyzer::Analyzer(char* filename, int warmup, int Q) {
     num_samples = 1000;
 }
 
-bool Analyzer::add_initial_conformation_from_file(char* filename){
-	ifstream in;
-	in.open(filename);
-	if (!in) {
-        std::cout << "ERROR: UNABLE TO OPEN FILE" << std::endl;
-		return false;
-	}
-    clkConformationAsList initial_conformation;
-	if (!initial_conformation.readFromCoords(in)) {
-        return false;
-    }
-    knot = new clkConformationBfacf3(initial_conformation);
-    return true;
-}
+/////////////////bool Analyzer::add_initial_conformation_from_file(char* filename) {
+/////////////////    std::ifstream in;
+/////////////////	in.open(filename);
+/////////////////	if (!in) {
+/////////////////        std::cout << "ERROR: UNABLE TO OPEN FILE" << std::endl;
+/////////////////		return false;
+/////////////////	}
+/////////////////    clkConformationAsList initial_conformation;
+/////////////////	if (!initial_conformation.readFromCoords(in)) {
+/////////////////        return false;
+/////////////////    }
+/////////////////    knot = new CLK(initial_conformation);
+/////////////////    return true;
+/////////////////}
 
 void Analyzer::get_knot_length(double& mean, double& std_dev, double& autocorr_coefficient,
                                double z, double q, int num_samples, int steps_between_samples, int num_warmup_steps) {
-	add_initial_conformation_from_file(knot_filename);
+	///////////////////////add_initial_conformation_from_file(knot_filename);
+    knot = new CLK();
     std::vector<int> knot_lengths;
-    // Telling the clkConformationBfacf3 object (*knot) what the z value is now,
-    // instead of only specifying the z value in stepQ, allows it to precompute
-    // transition probabilities, so stepQ can run slightly faster
-    knot->setZ(z);
-    knot->stepQ(num_warmup_steps, q, z);
+    // Telling the CLK object (*knot) what the z value is now,
+    // instead of only specifying the z value in bfacf_moves, allows it to precompute
+    // transition probabilities, so bfacf_moves can run slightly faster
+    knot->set_z(z);
+    knot->set_q(q);
+    knot->bfacf_moves(num_warmup_steps);
     // Begin taking samples and saving the results in knot_lengths
     for (int i = 0; i < num_samples; ++i) {
-        knot->stepQ(steps_between_samples, q, z);
-        knot_lengths.push_back(knot->getComponent(0).size());
+        knot->bfacf_moves(steps_between_samples);
+        knot_lengths.push_back(knot->get_length());
     }
     
     // Compute the mean and standard deviation
