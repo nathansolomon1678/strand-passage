@@ -2,15 +2,18 @@
 #define VERTEX_H
 
 #include <array>
+#include <iostream>
 
 class Vertex {
   public:
     Vertex(int x, int y, int z);
-    ~Vertex();
+    Vertex(const std::array<int, 3>& coords);
 
     const std::array<int, 3> coords;
-    Vertex* prev;
-    Vertex* next;
+    int index_of_prev;
+    int index_of_next;
 };
+
+std::ostream& operator<<(std::ostream& out, const Vertex& v);
 
 #endif  // VERTEX_H

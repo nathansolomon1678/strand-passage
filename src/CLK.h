@@ -24,7 +24,7 @@ class CLK {
     void bfacf_moves(int num_steps);
 
   private:
-    std::vector<Vertex> vertices;
+    std::vector<Vertex> vertices = {};
     double z;
     double q;
 };

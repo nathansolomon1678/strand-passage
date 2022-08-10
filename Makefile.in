@@ -108,7 +108,8 @@ am__objects_1 = src/argprocessor.$(OBJEXT) src/autocorr.$(OBJEXT) \
 	src/CLK.$(OBJEXT) src/conformationAsList.$(OBJEXT) \
 	src/conformation.$(OBJEXT) src/legacy.$(OBJEXT) \
 	src/mmchain.$(OBJEXT) src/regularNgon.$(OBJEXT) \
-	src/zAnalyzer.$(OBJEXT) src/id.$(OBJEXT) src/vertex.$(OBJEXT)
+	src/zAnalyzer.$(OBJEXT) src/id.$(OBJEXT) src/vertex.$(OBJEXT) \
+	src/edge.$(OBJEXT)
 am_homfly_OBJECTS = $(am__objects_1) src/cross.$(OBJEXT) \
 	src/polynomesAZ.$(OBJEXT) src/homfly1_21.$(OBJEXT)
 homfly_OBJECTS = $(am_homfly_OBJECTS)
@@ -146,14 +147,14 @@ am__depfiles_remade = src/$(DEPDIR)/CLK.Po \
 	src/$(DEPDIR)/argprocessor.Po src/$(DEPDIR)/autocorr.Po \
 	src/$(DEPDIR)/conformation.Po \
 	src/$(DEPDIR)/conformationAsList.Po src/$(DEPDIR)/cross.Po \
-	src/$(DEPDIR)/homfly1_21.Po src/$(DEPDIR)/id.Po \
-	src/$(DEPDIR)/idknot.Po src/$(DEPDIR)/legacy.Po \
-	src/$(DEPDIR)/mmcMain.Po src/$(DEPDIR)/mmchain.Po \
-	src/$(DEPDIR)/polynomesAZ.Po src/$(DEPDIR)/regularNgon.Po \
-	src/$(DEPDIR)/vertex.Po src/$(DEPDIR)/zAnalyzer.Po \
-	src/$(DEPDIR)/zAnalyzerMain.Po src/xinger/$(DEPDIR)/main.Po \
-	src/xinger/$(DEPDIR)/random.Po src/xinger/$(DEPDIR)/util.Po \
-	src/xinger/$(DEPDIR)/xinger.Po
+	src/$(DEPDIR)/edge.Po src/$(DEPDIR)/homfly1_21.Po \
+	src/$(DEPDIR)/id.Po src/$(DEPDIR)/idknot.Po \
+	src/$(DEPDIR)/legacy.Po src/$(DEPDIR)/mmcMain.Po \
+	src/$(DEPDIR)/mmchain.Po src/$(DEPDIR)/polynomesAZ.Po \
+	src/$(DEPDIR)/regularNgon.Po src/$(DEPDIR)/vertex.Po \
+	src/$(DEPDIR)/zAnalyzer.Po src/$(DEPDIR)/zAnalyzerMain.Po \
+	src/xinger/$(DEPDIR)/main.Po src/xinger/$(DEPDIR)/random.Po \
+	src/xinger/$(DEPDIR)/util.Po src/xinger/$(DEPDIR)/xinger.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -328,7 +329,7 @@ top_srcdir = @top_srcdir@
 AM_CXXFLAGS = -g -fpermissive -std=c++11
 AM_CFLAGS = 
 AM_LDFLAGS = 
-obj_src = src/argprocessor.cpp src/autocorr.cpp src/CLK.cpp src/conformationAsList.cpp src/conformation.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp src/vertex.cpp
+obj_src = src/argprocessor.cpp src/autocorr.cpp src/CLK.cpp src/conformationAsList.cpp src/conformation.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp src/vertex.cpp src/edge.cpp
 mmc_SOURCES = $(obj_src) src/mmcMain.cpp
 zAnalyzer_SOURCES = $(obj_src) src/zAnalyzerMain.cpp
 idknot_SOURCES = $(obj_src) src/idknot.cpp
@@ -457,6 +458,7 @@ src/zAnalyzer.$(OBJEXT): src/$(am__dirstamp) \
 src/id.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/vertex.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/edge.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/cross.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/polynomesAZ.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
@@ -517,6 +519,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/conformation.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/conformationAsList.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/cross.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/edge.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/homfly1_21.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/id.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/idknot.Po@am__quote@ # am--include-marker
@@ -849,6 +852,7 @@ distclean: distclean-am
 	-rm -f src/$(DEPDIR)/conformation.Po
 	-rm -f src/$(DEPDIR)/conformationAsList.Po
 	-rm -f src/$(DEPDIR)/cross.Po
+	-rm -f src/$(DEPDIR)/edge.Po
 	-rm -f src/$(DEPDIR)/homfly1_21.Po
 	-rm -f src/$(DEPDIR)/id.Po
 	-rm -f src/$(DEPDIR)/idknot.Po
@@ -917,6 +921,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/$(DEPDIR)/conformation.Po
 	-rm -f src/$(DEPDIR)/conformationAsList.Po
 	-rm -f src/$(DEPDIR)/cross.Po
+	-rm -f src/$(DEPDIR)/edge.Po
 	-rm -f src/$(DEPDIR)/homfly1_21.Po
 	-rm -f src/$(DEPDIR)/id.Po
 	-rm -f src/$(DEPDIR)/idknot.Po
