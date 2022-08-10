@@ -9,25 +9,9 @@ Analyzer::Analyzer(char* filename, int warmup, int Q) {
     num_samples = 1000;
 }
 
-/////////////////bool Analyzer::add_initial_conformation_from_file(char* filename) {
-/////////////////    std::ifstream in;
-/////////////////	in.open(filename);
-/////////////////	if (!in) {
-/////////////////        std::cout << "ERROR: UNABLE TO OPEN FILE" << std::endl;
-/////////////////		return false;
-/////////////////	}
-/////////////////    clkConformationAsList initial_conformation;
-/////////////////	if (!initial_conformation.readFromCoords(in)) {
-/////////////////        return false;
-/////////////////    }
-/////////////////    knot = new CLK(initial_conformation);
-/////////////////    return true;
-/////////////////}
-
 void Analyzer::get_knot_length(double& mean, double& std_dev, double& autocorr_coefficient,
                                double z, double q, int num_samples, int steps_between_samples, int num_warmup_steps) {
-	///////////////////////add_initial_conformation_from_file(knot_filename);
-    knot = new CLK();
+    knot = new CLK(knot_filename);
     std::vector<int> knot_lengths;
     // Telling the CLK object (*knot) what the z value is now,
     // instead of only specifying the z value in bfacf_moves, allows it to precompute

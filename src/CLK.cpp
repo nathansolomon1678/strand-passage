@@ -1,25 +1,21 @@
 #include "CLK.h"
 
-CLK::CLK() {
-    Vertex vertex1(0, 0, 0);
-    Vertex vertex2(1, 0, 0);
-    Vertex vertex3(1, 1, 0);
-    Vertex vertex4(0, 1, 0);
+CLK::CLK(std::string filename) {
+    // Constructs a CLK from a knot in Rob Scharein's CUBE file format for knots
+    std::ifstream file_stream(filename);
+    int x, y, z;
+    while (file_stream >> x >> y >> z) {
+        vertices.emplace_back(x, y, z);
+    }
 
-    vertices.push_back(vertex1);
-    vertices.push_back(vertex2);
-    vertices.push_back(vertex3);
-    vertices.push_back(vertex4);
-
-    vertices[0].index_of_prev = 4;
-    vertices[1].index_of_prev = 0;
-    vertices[2].index_of_prev = 1;
-    vertices[3].index_of_prev = 2;
-
+    for (int i = 1; i < vertices.size() - 1; ++i) {
+        vertices[i].index_of_prev = i - 1;
+        vertices[i].index_of_next = i + 1;
+    }
+    vertices[0].index_of_prev = vertices.size();
     vertices[0].index_of_next = 1;
-    vertices[1].index_of_next = 2;
-    vertices[2].index_of_next = 3;
-    vertices[3].index_of_next = 0;
+    vertices[vertices.size()].index_of_prev = vertices.size() - 1;
+    vertices[vertices.size()].index_of_next = 0;
 }
 
 CLK::~CLK() { }

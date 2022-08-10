@@ -4,12 +4,13 @@
 #include "vertex.h"
 #include "edge.h"
 
+#include <fstream>
 #include <iostream>
 #include <vector>
 
 class CLK {
   public:
-    CLK();
+    CLK(std::string filename);
     ~CLK();
 
     void set_z(double z);
