@@ -22,7 +22,7 @@ void Analyzer::get_knot_length(double& mean, double& std_dev, double& autocorr_c
     // Begin taking samples and saving the results in knot_lengths
     for (int i = 0; i < num_samples; ++i) {
         knot->bfacf_moves(steps_between_samples);
-        knot_lengths.push_back(knot->get_length());
+        knot_lengths.push_back(knot->length());
     }
     
     // Compute the mean and standard deviation

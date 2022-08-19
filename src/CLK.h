@@ -1,33 +1,36 @@
 #ifndef CLK_H
 #define CLK_H
 
-#include "vertex.h"
-#include "edge.h"
+#include "contiguous_list.h"
+#include "vertices_and_edges.h"
 
+#include <array>
 #include <fstream>
 #include <iostream>
-#include <vector>
 
 class CLK {
   public:
     CLK(std::string filename);
-    ~CLK();
 
     void set_z(double z);
     void set_q(double q);
 
     double get_z();
     double get_q();
-    int get_length();
+    int length();
     std::string get_knot_as_string();
 
+    double move_probability(int vertex_index, char move_direction);
+    void perform_move(int vertex_index);
     void bfacf_move();
     void bfacf_moves(int num_steps);
 
   private:
-    std::vector<Vertex> vertices = {};
+    ContiguousList<std::array<int, 3>> vertices;
     double z;
     double q;
 };
+
+bool is_valid_CLK(std::string clk_as_str);
 
 #endif  // CLK_H

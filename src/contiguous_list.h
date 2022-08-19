@@ -16,6 +16,8 @@ class Node {
     T content;
     int index_of_prev_node;
     int index_of_next_node;
+    Node<T>& prev();
+    Node<T>& next();
 
   private:
     std::vector<Node<T>>& container;
@@ -33,13 +35,15 @@ class Node {
 template <typename T>
 class ContiguousList {
   public:
-    ContiguousList(T first_element, int max_size);
+    ContiguousList(int max_size = 4);
     int size();
+    void insert_first_node(T content);
     void insert_node(T content, int index_of_prev_node);
-    void delete_node(int index);
-
-  private:
+    void delete_nodes(std::vector<int> indices);
     std::vector<Node<T>> data;
 };
+
+// Weird template stuff requires including the defintions in the header file
+#include "contiguous_list.cpp"
 
 #endif  // CONTIGUOUS_LIST_H

@@ -30,4 +30,6 @@ void operator+=(std::array<int, 3>& vertex, const char edge);
 
 char operator-(const std::array<int, 3>& vertex1, const std::array<int, 3>& vertex2);
 
+char opposite_direction(char edge);
+
 #endif  // VERTICES_AND_EDGES_H
