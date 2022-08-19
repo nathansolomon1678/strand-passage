@@ -6,7 +6,7 @@ all: mmc zAnalyzer idknot homfly xinger
 
 bin_PROGRAMS = mmc zAnalyzer idknot homfly xinger
 
-obj_src = src/argprocessor.cpp src/autocorr.cpp src/CLK.cpp src/conformationAsList.cpp src/conformation.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp src/vertex.cpp src/edge.cpp src/contiguous_list.cpp
+obj_src = src/argprocessor.cpp src/autocorr.cpp src/CLK.cpp src/conformationAsList.cpp src/conformation.cpp src/legacy.cpp src/mmchain.cpp src/regularNgon.cpp src/zAnalyzer.cpp src/id.cpp src/vertices_and_edges.cpp src/contiguous_list.cpp
 
 mmc_SOURCES = $(obj_src) src/mmcMain.cpp
 
