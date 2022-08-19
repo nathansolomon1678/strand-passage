@@ -44,15 +44,21 @@ std::string CLK::get_knot_as_string() {
     }
     if (!is_valid_CLK(compressed_knot_data)) {
         std::cout << "Invalid CLK: \"" << compressed_knot_data << '"' << std::endl;
+        std::cout << "Vertices occupied (not in order): " << std::endl;
+        for (const std::array<int, 3>& coords : vertices_hashmap) {
+            std::cout << coords << std::endl;
+        }
         throw std::exception();
     }
     return compressed_knot_data;
 }
 
 void CLK::print_coords() {
+    int current_index = 0;
     for (int i = 0; i < vertices.size(); ++i) {
-        Node<std::array<int, 3>>& current_node = vertices.data[i];
-        std::cout << i << "\t[" << current_node.index_of_prev_node << "] " << current_node.content << " [" << current_node.index_of_next_node << "]" << std::endl;
+        std::array<int, 3> coords = vertices.data[current_index].content;
+        std::cout << contains_vertex(coords) << '\t' << coords << std::endl;
+        current_index = vertices.data[current_index].index_of_next_node;
     }
 }
 
@@ -182,33 +188,32 @@ bool CLK::perform_move(int vertex_index) {
     if (vertex_before_start.content - start_vertex.content == direction &&
         vertex_after_end.content    - end_vertex.content == direction) {
         // Perform a -2 move
-        std::cout << "foo  " << vertex_index << "  " << direction << std::endl;
         vertices_hashmap.erase(vertices_hashmap.find(start_vertex.content));
         vertices_hashmap.erase(vertices_hashmap.find(end_vertex.content));
-        std::cout << "Indices to remove: " << vertex_index << ", " << start_vertex.index_of_next_node << std::endl;
         vertices.delete_nodes({vertex_index, start_vertex.index_of_next_node});
     } else if (vertex_before_start.content - start_vertex.content != direction &&
                vertex_after_end.content    - end_vertex.content != direction) {
         // Perform a +2 move
-        std::cout << "bar  " << vertex_index << "  " << direction << std::endl;
-        vertices.insert_node(start_vertex.content + direction, vertex_index);
-        vertices_hashmap.insert(start_vertex.content + direction);
-        vertices.insert_node(end_vertex.content + direction, start_vertex.index_of_next_node);
-        vertices_hashmap.insert(end_vertex.content + direction);
+        std::array<int, 3> new_vertex_coords = end_vertex.content + direction;
+        vertices_hashmap.insert(new_vertex_coords);
+        vertices.insert_node(new_vertex_coords, vertex_index);
+
+        new_vertex_coords = vertices.data[vertex_index].content + direction;
+        vertices_hashmap.insert(new_vertex_coords);
+        vertices.insert_node(new_vertex_coords, vertex_index);
     } else if (vertex_before_start.content - start_vertex.content == direction) {
         // Perform a 0 move by swapping this edge with the previous edge
-        std::cout << "biz  " << vertex_index << "  " << direction << std::endl;
         vertices_hashmap.erase(vertices_hashmap.find(start_vertex.content));
         start_vertex.content = end_vertex.content + direction;
         vertices_hashmap.insert(start_vertex.content);
     } else {
         // Perform a 0 move by swapping this edge with the next edge
-        std::cout << "baz  " << vertex_index << "  " << direction << std::endl;
         vertices_hashmap.erase(vertices_hashmap.find(end_vertex.content));
         end_vertex.content = start_vertex.content + direction;
         vertices_hashmap.insert(end_vertex.content);
     }
 
+    std::cout << std::endl;
     return true;
 }
 

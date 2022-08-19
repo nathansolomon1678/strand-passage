@@ -10,16 +10,16 @@
 // This contructor should only be used for creating the first element of a ContiguousList,
 // since it doesn't set index_of_prev_node or index_of_next_node like the other constructor does
 template <typename T>
-Node<T>::Node(T& content, std::vector<Node<T>>& container) :
+Node<T>::Node(const T& content, std::vector<Node<T>>& container) :
     content(content), container(container), index_of_prev_node(0), index_of_next_node(0) {
 }
 
 template <typename T>
-Node<T>::Node(T& content, std::vector<Node<T>>& container, int index_of_prev_node, int current_index) :
+Node<T>::Node(const T& content, std::vector<Node<T>>& container, int index_of_prev_node, int current_index) :
     content(content), container(container), index_of_prev_node(index_of_prev_node) {
-    index_of_next_node = container[index_of_prev_node].index_of_next_node;
-    container[index_of_prev_node].index_of_next_node = current_index;
-    container[index_of_next_node].index_of_prev_node = current_index;
+    index_of_next_node = prev().index_of_next_node;
+    prev().index_of_next_node = current_index;
+    next().index_of_prev_node = current_index;
 }
 
 template <typename T>
@@ -44,7 +44,7 @@ int ContiguousList<T>::size() {
 }
 
 template <typename T>
-void ContiguousList<T>::insert_first_nodes(std::vector<T> elements) {
+void ContiguousList<T>::insert_first_nodes(const std::vector<T>& elements) {
     if (elements.size() < 2) {
         throw std::exception();
     }
@@ -62,8 +62,8 @@ void ContiguousList<T>::insert_first_nodes(std::vector<T> elements) {
 }
 
 template <typename T>
-void ContiguousList<T>::insert_node(T content, int index_of_prev_node) {
-    data.push_back(Node<T>(content, data, index_of_prev_node, data.size()));
+void ContiguousList<T>::insert_node(const T& content, int index_of_prev_node) {
+    data.emplace_back(content, data, index_of_prev_node, data.size());
 }
 
 // WARNING: the delete_nodes function will move around Nodes other than
@@ -79,12 +79,14 @@ void ContiguousList<T>::delete_nodes(std::vector<int> indices) {
     }
     for (int i = 0; i < indices.size(); ++i) {
         int index = indices[i];
+        if (index >= data.size() - indices.size()) {
+            continue;
+        }
         Node<T>& element_to_remove = data[index];
         // Copy tail elements of the list to where the elements to be removed currently are
         element_to_remove.content            = data[data.size() - i - 1].content;
         element_to_remove.index_of_prev_node = data[data.size() - i - 1].index_of_prev_node;
         element_to_remove.index_of_next_node = data[data.size() - i - 1].index_of_next_node;
-        // Make sure that none of the indices are referring to nodes that will be popped from the end
         if (element_to_remove.index_of_prev_node >= data.size() - indices.size()) {
             element_to_remove.index_of_prev_node = indices[data.size() - element_to_remove.index_of_prev_node - 1];
         }
@@ -96,6 +98,7 @@ void ContiguousList<T>::delete_nodes(std::vector<int> indices) {
     }
     // Delete the nodes that have been copied to a new location
     for (int i = 0; i < indices.size(); ++i) {
+        const int index = data.size() - i - 1;
         data.pop_back();
     }
 }

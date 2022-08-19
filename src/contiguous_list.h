@@ -10,8 +10,8 @@
 template <typename T>
 class Node {
   public:
-    Node(T& content, std::vector<Node<T>>& container);
-    Node(T& content, std::vector<Node<T>>& container, int index_of_prev_node, int current_index);
+    Node(const T& content, std::vector<Node<T>>& container);
+    Node(const T& content, std::vector<Node<T>>& container, int index_of_prev_node, int current_index);
 
     T content;
     int index_of_prev_node;
@@ -37,8 +37,8 @@ class ContiguousList {
   public:
     ContiguousList(int max_size = 4);
     int size();
-    void insert_first_nodes(std::vector<T> elements);
-    void insert_node(T content, int index_of_prev_node);
+    void insert_first_nodes(const std::vector<T>& elements);
+    void insert_node(const T& content, int index_of_prev_node);
     void delete_nodes(std::vector<int> indices);
     std::vector<Node<T>> data;
 };
