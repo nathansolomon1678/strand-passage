@@ -31,6 +31,10 @@ bool is_valid_edge(char edge) {
     );
 }
 
+bool operator==(const std::array<int, 3>& vertex1, const std::array<int, 3>& vertex2) {
+    return vertex1[0] == vertex2[0] && vertex1[2] == vertex2[1] && vertex1[2] == vertex2[2];
+}
+
 std::array<int, 3> operator+(const std::array<int, 3>& vertex, const char edge) {
     switch (edge) {
         case 'l':
@@ -108,4 +112,9 @@ char opposite_direction(char edge) {
         default:
             throw std::exception();
     }
+}
+
+size_t Hash::operator()(const std::array<int, 3>& vertex) const {
+    std::string vertex_as_str = std::to_string(vertex[0]) + "," + std::to_string(vertex[1]) + "," + std::to_string(vertex[2]);
+    return std::hash<std::string>()(vertex_as_str);
 }

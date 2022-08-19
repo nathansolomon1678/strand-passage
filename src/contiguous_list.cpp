@@ -44,8 +44,21 @@ int ContiguousList<T>::size() {
 }
 
 template <typename T>
-void ContiguousList<T>::insert_first_node(T content) {
-    data.push_back(Node<T>(content, data));
+void ContiguousList<T>::insert_first_nodes(std::vector<T> elements) {
+    if (elements.size() < 2) {
+        throw std::exception();
+    }
+    for (int i = 0; i < elements.size(); ++i) {
+        data.emplace_back(elements[i], data);
+    }
+    data[0].index_of_prev_node = elements.size() - 1;
+    data[0].index_of_next_node = 1;
+    for (int i = 0; i < elements.size() - 1; ++i) {
+        data[i].index_of_prev_node = i - 1;
+        data[i].index_of_next_node = i + 1;
+    }
+    data[elements.size() - 1].index_of_prev_node = elements.size() - 2;
+    data[elements.size() - 1].index_of_next_node = 0;
 }
 
 template <typename T>
@@ -53,28 +66,38 @@ void ContiguousList<T>::insert_node(T content, int index_of_prev_node) {
     data.push_back(Node<T>(content, data, index_of_prev_node, data.size()));
 }
 
+// WARNING: the delete_nodes function will move around Nodes other than
+// just the nodes being deleted
 template <typename T>
 void ContiguousList<T>::delete_nodes(std::vector<int> indices) {
-    // Make sure that the nodes before and after the nodes to be removed are linked to each other
-    for (int& index : indices) {
-        Node<T>& element_to_remove = data[index];
-        data[element_to_remove.index_of_prev_node].index_of_next_node = element_to_remove.index_of_next_node;
-        data[element_to_remove.index_of_next_node].index_of_prev_node = element_to_remove.index_of_prev_node;
-    }
-    // Copy tail elements of the list to where the elements to be removed currently are
     for (int i = 0; i < indices.size(); ++i) {
-        int current_index = indices[i];
-        data[current_index].content            = data[data.size() - i - 1].content;
-        data[current_index].index_of_prev_node = data[data.size() - i - 1].index_of_prev_node;
-        data[current_index].index_of_next_node = data[data.size() - i - 1].index_of_next_node;
-        data[data[current_index].index_of_prev_node].index_of_next_node = current_index;
-        data[data[current_index].index_of_next_node].index_of_prev_node = current_index;
+        int index = indices[i];
+        // Make sure that the nodes before and after the nodes to be removed are linked to each other
+        Node<T>& element_to_remove = data[index];
+        element_to_remove.prev().index_of_next_node = element_to_remove.index_of_next_node;
+        element_to_remove.next().index_of_prev_node = element_to_remove.index_of_prev_node;
+    }
+    for (int i = 0; i < indices.size(); ++i) {
+        int index = indices[i];
+        Node<T>& element_to_remove = data[index];
+        // Copy tail elements of the list to where the elements to be removed currently are
+        element_to_remove.content            = data[data.size() - i - 1].content;
+        element_to_remove.index_of_prev_node = data[data.size() - i - 1].index_of_prev_node;
+        element_to_remove.index_of_next_node = data[data.size() - i - 1].index_of_next_node;
+        // Make sure that none of the indices are referring to nodes that will be popped from the end
+        if (element_to_remove.index_of_prev_node >= data.size() - indices.size()) {
+            element_to_remove.index_of_prev_node = indices[data.size() - element_to_remove.index_of_prev_node - 1];
+        }
+        if (element_to_remove.index_of_next_node >= data.size() - indices.size()) {
+            element_to_remove.index_of_next_node = indices[data.size() - element_to_remove.index_of_next_node - 1];
+        }
+        element_to_remove.prev().index_of_next_node = index;
+        element_to_remove.next().index_of_prev_node = index;
     }
     // Delete the nodes that have been copied to a new location
     for (int i = 0; i < indices.size(); ++i) {
         data.pop_back();
     }
-    
 }
 
 #endif  // CONTIGUOUS_LIST_CPP

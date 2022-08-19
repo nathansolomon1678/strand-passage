@@ -24,6 +24,8 @@ std::ostream& operator<<(std::ostream& out, const std::array<int, 3>& vertex);
 
 bool is_valid_edge(char edge);
 
+bool operator==(const std::array<int, 3>& vertex1, const std::array<int, 3>& vertex2);
+
 std::array<int, 3> operator+(const std::array<int, 3>& coords, const char edge);
 
 void operator+=(std::array<int, 3>& vertex, const char edge);
@@ -31,5 +33,9 @@ void operator+=(std::array<int, 3>& vertex, const char edge);
 char operator-(const std::array<int, 3>& vertex1, const std::array<int, 3>& vertex2);
 
 char opposite_direction(char edge);
+
+struct Hash {
+    size_t operator()(const std::array<int, 3>& vertex) const;
+};
 
 #endif  // VERTICES_AND_EDGES_H

@@ -5,11 +5,19 @@ CLK::CLK(std::string filename) {
     std::ifstream file_stream(filename);
     int x, y, z;
 
+    // ContiguousList must be initialized with at least two elements before
+    // inserting elements normally, or else the linking won't work
     file_stream >> x >> y >> z;
-    vertices.insert_first_node({x, y, z});
+    std::array<int, 3> first_vertex = {x, y, z};
+    file_stream >> x >> y >> z;
+    std::array<int, 3> second_vertex = {x, y, z};
+    vertices.insert_first_nodes({first_vertex, second_vertex});
+    vertices_hashmap.insert(first_vertex);
+    vertices_hashmap.insert(second_vertex);
 
     while (file_stream >> x >> y >> z) {
         vertices.insert_node({x, y, z}, vertices.size() - 1);
+        vertices_hashmap.insert({x, y, z});
     }
 }
 
@@ -41,13 +49,95 @@ std::string CLK::get_knot_as_string() {
     return compressed_knot_data;
 }
 
-double CLK::move_probability(int vertex_index, char move_direction) {
-    // Given the first vertex of the edge to be moved and the direction to move it in,
-    // returns the probability of that type of move
-    return .15;  // PLACEHOLDER
+void CLK::print_coords() {
+    for (int i = 0; i < vertices.size(); ++i) {
+        Node<std::array<int, 3>>& current_node = vertices.data[i];
+        std::cout << i << "\t[" << current_node.index_of_prev_node << "] " << current_node.content << " [" << current_node.index_of_next_node << "]" << std::endl;
+    }
 }
 
-void CLK::perform_move(int vertex_index) {
+bool CLK::contains_vertex(std::array<int, 3> coords) {
+    return vertices_hashmap.find(coords) != vertices_hashmap.end();
+}
+
+void CLK::bfacf_move() {
+    // Some edges can't move in any direction, so continue trying until one move has been performed
+    while (true) {
+        // The BFACF algorithm begins by selecting a random edge
+        // vertex_index is the index of the vertex at the beginning of that edge
+        int vertex_index = std::rand() % vertices.size();
+        if (perform_move(vertex_index)) {
+            break;
+        }
+    }
+}
+
+void CLK::bfacf_moves(int num_steps) {
+    for (int i = 0; i < num_steps; ++i) {
+        print_coords();
+        std::cout << get_knot_as_string() << std::endl;
+        bfacf_move();
+    }
+}
+
+// TODO: account for the Q parameter when determining move probabilities (and find literature to justify the formula for the probabilities)
+double CLK::probability_of_p2_move() {
+    // Probability of a +2 move
+    const double z_squared = z * z;
+    return z_squared / (1 + 3 * z_squared);
+}
+double CLK::probability_of_m2_move() {
+    // Probability of a -2 move
+    return 1 / (1 + 3 * z * z);
+}
+double CLK::probability_of_0_move() {
+    // Probability of a 0 move (doesn't change length of knot)
+    const double z_squared = z * z;
+    return (1 + z_squared) / 2 / (1 + 3 * z_squared);
+}
+
+double CLK::move_probability(int vertex_index, char direction) {
+    // Given the first vertex of the edge to be moved and the direction to move it in,
+    // returns the probability of that type of move
+    Node<std::array<int, 3>>& start_vertex        = vertices.data[vertex_index];
+    Node<std::array<int, 3>>& end_vertex          = start_vertex.next();
+    Node<std::array<int, 3>>& vertex_before_start = start_vertex.prev();
+    Node<std::array<int, 3>>& vertex_after_end    = end_vertex.next();
+
+    // If the edge is parallel or antiparallel to the move direction, return 0
+    const char current_edge = end_vertex.content - start_vertex.content;
+    if (current_edge == direction || current_edge == opposite_direction(direction)) {
+        return 0;
+    }
+
+    if (vertex_before_start.content - start_vertex.content == direction &&
+        vertex_after_end.content    - end_vertex.content   == direction) {
+        // -2 move
+        if (vertices.size() > 4) {
+            return probability_of_m2_move();
+        }
+    } else if (vertex_before_start.content - start_vertex.content != direction &&
+               vertex_after_end.content    - end_vertex.content   != direction) {
+        // +2 move
+        if (!contains_vertex(start_vertex.content + direction) &&
+            !contains_vertex(  end_vertex.content + direction)) {
+            return probability_of_p2_move();
+        }
+    } else if (vertex_before_start.content - start_vertex.content == direction) {
+        // 0 move (swap this edge with the previous edge)
+        if (!contains_vertex(end_vertex.content + direction)) {
+            return probability_of_0_move();
+        }
+    } else {
+        // 0 move (swap this edge with the next edge)
+        if (!contains_vertex(start_vertex.content + direction)) {
+            return probability_of_0_move();
+        }
+    }
+    return 0;
+}
+
+bool CLK::perform_move(int vertex_index) {
     // Given the first vertex of the edge to be moved, determines the direction to move it in,
     // then moves, adds, and deletes vertices as necessary to perform that move
     char possible_move_directions[6] = {'l', 'r', 'u', 'd', 'f', 'b'};
@@ -62,7 +152,7 @@ void CLK::perform_move(int vertex_index) {
     
     // Ensure that the probabilities of all possible moves add up to 1
     if (total_probability == 0) {
-        return;
+        return false;
     } else if (total_probability > 1) {
         throw std::exception();
     } else if (total_probability < 1) {
@@ -77,12 +167,12 @@ void CLK::perform_move(int vertex_index) {
     for (int i = 0; i < 6; ++i) {
         if (random_num <= possible_move_probabilities[i]) {
             direction = possible_move_directions[i];
+            break;
         }
         random_num -= possible_move_probabilities[i];
     }
 
-    // TODO: use a hash map to check if the locations that the vertices are moving into are taken
-
+    // TODO: clean this up, wo it doesn't use so many references to node objects and so it doesn't have to use `.content` a gazillion times
     // The edge to be moved is the one between start_vertex.content and end_vertex.content
     Node<std::array<int, 3>>& start_vertex        = vertices.data[vertex_index];
     Node<std::array<int, 3>>& end_vertex          = start_vertex.next();
@@ -90,39 +180,40 @@ void CLK::perform_move(int vertex_index) {
     Node<std::array<int, 3>>& vertex_after_end    = end_vertex.next();
 
     if (vertex_before_start.content - start_vertex.content == direction &&
-        vertex_after_end.content - end_vertex.content == direction) {
+        vertex_after_end.content    - end_vertex.content == direction) {
         // Perform a -2 move
+        std::cout << "foo  " << vertex_index << "  " << direction << std::endl;
+        vertices_hashmap.erase(vertices_hashmap.find(start_vertex.content));
+        vertices_hashmap.erase(vertices_hashmap.find(end_vertex.content));
+        std::cout << "Indices to remove: " << vertex_index << ", " << start_vertex.index_of_next_node << std::endl;
         vertices.delete_nodes({vertex_index, start_vertex.index_of_next_node});
     } else if (vertex_before_start.content - start_vertex.content != direction &&
-               vertex_after_end.content - end_vertex.content != direction) {
+               vertex_after_end.content    - end_vertex.content != direction) {
         // Perform a +2 move
+        std::cout << "bar  " << vertex_index << "  " << direction << std::endl;
         vertices.insert_node(start_vertex.content + direction, vertex_index);
+        vertices_hashmap.insert(start_vertex.content + direction);
         vertices.insert_node(end_vertex.content + direction, start_vertex.index_of_next_node);
+        vertices_hashmap.insert(end_vertex.content + direction);
     } else if (vertex_before_start.content - start_vertex.content == direction) {
         // Perform a 0 move by swapping this edge with the previous edge
+        std::cout << "biz  " << vertex_index << "  " << direction << std::endl;
+        vertices_hashmap.erase(vertices_hashmap.find(start_vertex.content));
         start_vertex.content = end_vertex.content + direction;
+        vertices_hashmap.insert(start_vertex.content);
     } else {
         // Perform a 0 move by swapping this edge with the next edge
+        std::cout << "baz  " << vertex_index << "  " << direction << std::endl;
+        vertices_hashmap.erase(vertices_hashmap.find(end_vertex.content));
         end_vertex.content = start_vertex.content + direction;
+        vertices_hashmap.insert(end_vertex.content);
     }
 
-    std::cout << get_knot_as_string() << std::endl;
-}
-
-void CLK::bfacf_move() {
-    // The BFACF algorithm begins by selecting a random edge
-    // vertex_index is the index of the vertex at the beginning of that edge
-    int vertex_index = std::rand() % vertices.size();
-    perform_move(vertex_index);
-}
-
-void CLK::bfacf_moves(int num_steps) {
-    for (int i = 0; i < num_steps; ++i) {
-        this->bfacf_move();
-    }
+    return true;
 }
 
 bool is_valid_CLK(std::string clk_as_str) {
+    // TODO: use an unordered set to check that this path is self avoiding
     std::array<int, 3> coords = {0, 0, 0};
     char last_edge = clk_as_str[clk_as_str.size() - 1];
     for (char edge : clk_as_str) {
@@ -131,8 +222,5 @@ bool is_valid_CLK(std::string clk_as_str) {
         coords += edge;
         last_edge = edge;
     }
-    if (coords[0] != 0) { return false; }
-    if (coords[1] != 0) { return false; }
-    if (coords[2] != 0) { return false; }
-    return true;
+    return operator==(coords, {0, 0, 0});
 }

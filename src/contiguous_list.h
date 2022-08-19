@@ -37,7 +37,7 @@ class ContiguousList {
   public:
     ContiguousList(int max_size = 4);
     int size();
-    void insert_first_node(T content);
+    void insert_first_nodes(std::vector<T> elements);
     void insert_node(T content, int index_of_prev_node);
     void delete_nodes(std::vector<int> indices);
     std::vector<Node<T>> data;

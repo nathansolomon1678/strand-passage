@@ -7,6 +7,7 @@
 #include <array>
 #include <fstream>
 #include <iostream>
+#include <unordered_set>
 
 class CLK {
   public:
@@ -19,16 +20,23 @@ class CLK {
     double get_q();
     int length();
     std::string get_knot_as_string();
+    void print_coords();
+    bool contains_vertex(std::array<int, 3> coords);
 
-    double move_probability(int vertex_index, char move_direction);
-    void perform_move(int vertex_index);
     void bfacf_move();
     void bfacf_moves(int num_steps);
 
+    double probability_of_p2_move();
+    double probability_of_m2_move();
+    double probability_of_0_move();
+
   private:
     ContiguousList<std::array<int, 3>> vertices;
+    std::unordered_set<std::array<int, 3>, Hash> vertices_hashmap;
     double z;
     double q;
+    double move_probability(int vertex_index, char direction);
+    bool perform_move(int vertex_index);
 };
 
 bool is_valid_CLK(std::string clk_as_str);
