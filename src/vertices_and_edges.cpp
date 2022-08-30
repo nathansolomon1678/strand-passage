@@ -12,31 +12,31 @@
 
 #include "vertices_and_edges.h"
 
-std::ostream& operator<<(std::ostream& out, const std::array<int, 3>& vertex) {
+std::ostream& operator<<(std::ostream& out, const ivec3& vertex) {
     out << '(' << vertex[0] << ',' << vertex[1] << ',' << vertex[2] << ')';
     return out;
 }
 
-bool is_valid_edge(char edge) {
+bool is_valid_edge(Edge e) {
     // Edges must be one of the 6 possible directions:
     // Left, Right, Up, Down, Forwards, Backwards
-    if (edge < 'b' || edge > 'u') { return false; }
+    if (e < 'b' || e > 'u') { return false; }
     return (
-        edge == 'l' ||
-        edge == 'r' ||
-        edge == 'u' ||
-        edge == 'd' ||
-        edge == 'f' ||
-        edge == 'b'
+        e == 'l' ||
+        e == 'r' ||
+        e == 'u' ||
+        e == 'd' ||
+        e == 'f' ||
+        e == 'b'
     );
 }
 
-bool operator==(const std::array<int, 3>& vertex1, const std::array<int, 3>& vertex2) {
+bool operator==(const ivec3& vertex1, const ivec3& vertex2) {
     return vertex1[0] == vertex2[0] && vertex1[1] == vertex2[1] && vertex1[2] == vertex2[2];
 }
 
-std::array<int, 3> operator+(const std::array<int, 3>& vertex, const char edge) {
-    switch (edge) {
+ivec3 operator+(const ivec3& vertex, const Edge e) {
+    switch (e) {
         case 'l':
             return {vertex[0] - 1, vertex[1], vertex[2]};
             break;
@@ -56,12 +56,13 @@ std::array<int, 3> operator+(const std::array<int, 3>& vertex, const char edge) 
             return {vertex[0], vertex[1], vertex[2] - 1};
             break;
         default:
+            std::cerr << "Invalid edge: " << e << std::endl;
             throw std::exception();
     }
 }
 
-void operator+=(std::array<int, 3>& vertex, const char edge) {
-    switch (edge) {
+void operator+=(ivec3& vertex, const Edge e) {
+    switch (e) {
         case 'l':
             --vertex[0];
             break;
@@ -81,11 +82,12 @@ void operator+=(std::array<int, 3>& vertex, const char edge) {
             --vertex[2];
             break;
         default:
+            std::cerr << "Invalid edge: " << e << std::endl;
             throw std::exception();
     }
 }
 
-char operator-(const std::array<int, 3>& vertex1, const std::array<int, 3>& vertex2) {
+Edge operator-(const ivec3& vertex1, const ivec3& vertex2) {
     const int x_diff = vertex1[0] - vertex2[0];
     const int y_diff = vertex1[1] - vertex2[1];
     const int z_diff = vertex1[2] - vertex2[2];
@@ -97,12 +99,13 @@ char operator-(const std::array<int, 3>& vertex1, const std::array<int, 3>& vert
     else if (x_diff ==  0 && y_diff ==  0 && z_diff ==  1) { return 'f'; }
     else if (x_diff ==  0 && y_diff ==  0 && z_diff == -1) { return 'b'; }
     else {
+        std::cerr << "Error: vertices " << vertex1 << " and " << vertex2 << " are not adjacent." << std::endl;
         throw std::exception();
     }
 }
 
-char opposite_direction(char edge) {
-    switch (edge) {
+Edge opposite_direction(Edge e) {
+    switch (e) {
         case 'l':  return 'r'; break;
         case 'r':  return 'l'; break;
         case 'u':  return 'd'; break;
@@ -110,11 +113,12 @@ char opposite_direction(char edge) {
         case 'f':  return 'b'; break;
         case 'b':  return 'f'; break;
         default:
+            std::cerr << "Invalid edge: " << e << std::endl;
             throw std::exception();
     }
 }
 
-size_t Hash::operator()(const std::array<int, 3>& vertex) const {
+size_t Hash::operator()(const ivec3& vertex) const {
     std::string vertex_as_str = std::to_string(vertex[0]) + "," + std::to_string(vertex[1]) + "," + std::to_string(vertex[2]);
     return std::hash<std::string>()(vertex_as_str);
 }

@@ -1,49 +1,46 @@
 #ifndef CONTIGUOUS_LIST_H
 #define CONTIGUOUS_LIST_H
 
+#include <list>
+#include <random>
 #include <vector>
 
-/* Defines an element of a ContiguousList object, which is defined below.
- * Each Node stores an object of type T, as well as the indices of the
- * previous and next Node objects within the Contiguous List
+/* For these purposes, a "contiguous list" is just a normal doubly-linked list,
+ * except that it also stores a vector with the addresses of each element.
+ * That vector is contiguous, so you can get a random element in constant time,
+ * but it is not in the same order as the list
  */
-template <typename T>
-class Node {
-  public:
-    Node(const T& content, std::vector<Node<T>>& container);
-    Node(const T& content, std::vector<Node<T>>& container, int index_of_prev_node, int current_index);
 
-    T content;
-    int index_of_prev_node;
-    int index_of_next_node;
-    Node<T>& prev();
-    Node<T>& next();
+template <typename T>
+class ContiguousCircularListNode {
+  public:
+    ContiguousCircularListNode(const T& data, std::vector<ContiguousCircularListNode<T>*>& address_book);
+    T data;
+    ContiguousCircularListNode<T>* prev;
+    ContiguousCircularListNode<T>* next;
+    size_t index_in_address_book;
 
   private:
-    std::vector<Node<T>>& container;
+    std::vector<ContiguousCircularListNode<T>*>& address_book;
 };
 
-/* This class is essentially a doubly linked list, except that the elements
- * are all adjacent in memory, even though their order in memory is not the
- * same as their order in the list. This is useful because then we can get
- * a random element in constant time, while still being able to traverse the
- * list in constant time. To keep the elements contiguous, we store them in
- * an std::vector (which might be resized occasionally, but that's fine), 
- * and instead of deleting elements, we swap them with the last element and
- * then pop it.
- */
 template <typename T>
-class ContiguousList {
+class ContiguousCircularList {
   public:
-    ContiguousList(int max_size = 4);
-    int size();
-    void insert_first_nodes(const std::vector<T>& elements);
-    void insert_node(const T& content, int index_of_prev_node);
-    void delete_nodes(std::vector<int> indices);
-    std::vector<Node<T>> data;
+    ContiguousCircularList();
+    ContiguousCircularListNode<T>* head;
+
+    void insert_node(const T& data, ContiguousCircularListNode<T>* prev);
+    void create_initial_node(const T& data);
+    void delete_node(const ContiguousCircularListNode<T>* node);
+    ContiguousCircularListNode<T>* random_node() const;
+    size_t size() const;
+
+  private:
+    std::vector<ContiguousCircularListNode<T>*> address_book;
 };
 
-// Weird template stuff requires including the defintions in the header file
+// This next line is necessary because templates are weird
 #include "contiguous_list.cpp"
 
 #endif  // CONTIGUOUS_LIST_H

@@ -21,7 +21,7 @@ class CLK {
     int length();
     std::string get_knot_as_string();
     void print_coords();
-    bool contains_vertex(std::array<int, 3> coords);
+    bool contains_vertex(const ivec3& coords);
 
     void bfacf_move();
     void bfacf_moves(int num_steps);
@@ -31,12 +31,12 @@ class CLK {
     double probability_of_0_move();
 
   private:
-    ContiguousList<std::array<int, 3>> vertices;
+    ContiguousCircularList<std::array<int, 3>> vertices;
     std::unordered_set<std::array<int, 3>, Hash> vertices_hashmap;
     double z;
     double q;
-    double move_probability(int vertex_index, char direction);
-    bool perform_move(int vertex_index);
+    double move_probability(ContiguousCircularListNode<ivec3>* node, Edge direction);
+    bool perform_move(ContiguousCircularListNode<ivec3>* node);
 };
 
 bool is_valid_CLK(std::string clk_as_str);
