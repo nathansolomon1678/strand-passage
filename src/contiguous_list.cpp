@@ -40,8 +40,9 @@ void ContiguousCircularList<T>::create_initial_node(const T& data) {
 template <typename T>
 void ContiguousCircularList<T>::delete_node(const ContiguousCircularListNode<T>* node) {
     if (head == node) {
-        head == node->prev;
+        head = node->next;
     }
+    address_book[address_book.size() - 1]->index_in_address_book = node->index_in_address_book;
     address_book[node->index_in_address_book] = address_book[address_book.size() - 1];
     address_book.pop_back();
     node->prev->next = node->next;

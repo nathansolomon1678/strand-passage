@@ -33,7 +33,6 @@ std::string CLK::get_knot_as_string() {
     std::string compressed_knot_data = "";
     ContiguousCircularListNode<ivec3>* current_node = vertices.head;
     for (int i = 0; i < vertices.size(); ++i) {
-
         compressed_knot_data.push_back((char) (current_node->next->data - current_node->data));
         current_node = current_node->next;
     }
@@ -156,14 +155,6 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
     if (node->prev->data - node->data == direction &&
         node->next->next->data - node->next->data == direction) {
         // Perform a -2 move
-        std::cout << "\nPerforming -2 move"
-                  << "\nCurrent knot: " << get_knot_as_string()
-                  << "\nCurrent knot length: " << vertices.size()
-                  << "\nPrevious edge: " << node->data - node->prev->data
-                  << "\nCurrent edge:  " << node->next->data - node->data
-                  << "\nNext edge:     " << node->next->next->data - node->next->data
-                  << "\nDirection to move: " << direction
-                  << std::endl;
         vertices_hashmap.erase(vertices_hashmap.find(node->data));
         vertices_hashmap.erase(vertices_hashmap.find(node->next->data));
         vertices.delete_node(node->next);
@@ -171,14 +162,6 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
     } else if (node->prev->data - node->data != direction &&
                node->next->next->data - node->next->data != direction) {
         // Perform a +2 move
-        std::cout << "\nPerforming +2 move"
-                  << "\nCurrent knot: " << get_knot_as_string()
-                  << "\nCurrent knot length: " << vertices.size()
-                  << "\nPrevious edge: " << node->data - node->prev->data
-                  << "\nCurrent edge:  " << node->next->data - node->data
-                  << "\nNext edge:     " << node->next->next->data - node->next->data
-                  << "\nDirection to move: " << direction
-                  << std::endl;
         ivec3 new_vertex_coords = node->next->data + direction;
         vertices_hashmap.insert(new_vertex_coords);
         vertices.insert_node(new_vertex_coords, node);
@@ -188,33 +171,16 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
         vertices.insert_node(new_vertex_coords, node);
     } else if (node->prev->data - node->data == direction) {
         // Perform a 0 move by swapping this edge with the previous edge
-        std::cout << "\nPerforming 0 move"
-                  << "\nCurrent knot: " << get_knot_as_string()
-                  << "\nCurrent knot length: " << vertices.size()
-                  << "\nPrevious edge: " << node->data - node->prev->data
-                  << "\nCurrent edge:  " << node->next->data - node->data
-                  << "\nNext edge:     " << node->next->next->data - node->next->data
-                  << "\nDirection to move: " << direction
-                  << std::endl;
         vertices_hashmap.erase(vertices_hashmap.find(node->data));
         node->data = node->next->data + direction;
         vertices_hashmap.insert(node->data);
     } else {
         // Perform a 0 move by swapping this edge with the next edge
-        std::cout << "\nPerforming 0 move"
-                  << "\nCurrent knot: " << get_knot_as_string()
-                  << "\nCurrent knot length: " << vertices.size()
-                  << "\nPrevious edge: " << node->data - node->prev->data
-                  << "\nCurrent edge:  " << node->next->data - node->data
-                  << "\nNext edge:     " << node->next->next->data - node->next->data
-                  << "\nDirection to move: " << direction
-                  << std::endl;
         vertices_hashmap.erase(vertices_hashmap.find(node->next->data));
         node->next->data = node->data + direction;
         vertices_hashmap.insert(node->next->data);
     }
 
-    std::cout << std::endl;
     return true;
 }
 

@@ -31,8 +31,8 @@ class CLK {
     double probability_of_0_move();
 
   private:
-    ContiguousCircularList<std::array<int, 3>> vertices;
-    std::unordered_set<std::array<int, 3>, Hash> vertices_hashmap;
+    ContiguousCircularList<ivec3> vertices;
+    std::unordered_set<ivec3, Hash> vertices_hashmap;
     double z;
     double q;
     double move_probability(ContiguousCircularListNode<ivec3>* node, Edge direction);
