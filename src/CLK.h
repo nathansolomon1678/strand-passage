@@ -26,17 +26,18 @@ class CLK {
     void bfacf_move();
     void bfacf_moves(int num_steps);
 
-    double probability_of_p2_move();
-    double probability_of_m2_move();
-    double probability_of_0_move();
-
   private:
     ContiguousCircularList<ivec3> vertices;
-    std::unordered_set<ivec3, Hash> vertices_hashmap;
+    std::unordered_set<ivec3, Hash> vertices_hashmap;  ////// TODO: use a map from ivec3 to the address of the corresponding node, so that strand passage runs in constant time
     double z;
     double q;
     double move_probability(ContiguousCircularListNode<ivec3>* node, Edge direction);
     bool perform_move(ContiguousCircularListNode<ivec3>* node);
+
+    void set_move_probabilities();
+    double probability_of_p2_move;
+    double probability_of_m2_move;
+    double probability_of_0_move;
 };
 
 bool is_valid_CLK(std::string clk_as_str);

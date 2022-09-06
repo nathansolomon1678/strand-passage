@@ -17,12 +17,25 @@ CLK::CLK(std::string filename) {
     }
 }
 
+void CLK::set_move_probabilities() {
+    // TODO: account for the Q parameter when determining move probabilities
+    // (and find literature to justify the formula for the probabilities)
+    // Also, if it uses the Q parameter, precompute move proabilites for
+    // several possible lengths
+    const double z_squared = z * z;
+    probability_of_p2_move = z_squared / (1 + 3 * z_squared);
+    probability_of_m2_move = 1 / (1 + 3 * z * z);
+    probability_of_0_move = (1 + z_squared) / 2 / (1 + 3 * z_squared);
+}
+
 void CLK::set_z(double z) {
     this->z = z;
+    set_move_probabilities();
 }
 
 void CLK::set_q(double q) {
     this->q = q;
+    set_move_probabilities();
 }
 
 double CLK::get_z() { return z; }
@@ -35,10 +48,6 @@ std::string CLK::get_knot_as_string() {
     for (int i = 0; i < vertices.size(); ++i) {
         compressed_knot_data.push_back((char) (current_node->next->data - current_node->data));
         current_node = current_node->next;
-    }
-    if (!is_valid_CLK(compressed_knot_data)) {
-        std::cerr << "Invalid CLK: \"" << compressed_knot_data << '"' << std::endl;
-        throw std::exception();
     }
     return compressed_knot_data;
 }
@@ -58,25 +67,8 @@ void CLK::bfacf_move() {
 
 void CLK::bfacf_moves(int num_steps) {
     for (int i = 0; i < num_steps; ++i) {
-        std::cout << get_knot_as_string() << std::endl;
         bfacf_move();
     }
-}
-
-// TODO: account for the Q parameter when determining move probabilities (and find literature to justify the formula for the probabilities)
-double CLK::probability_of_p2_move() {
-    // Probability of a +2 move
-    const double z_squared = z * z;
-    return z_squared / (1 + 3 * z_squared);
-}
-double CLK::probability_of_m2_move() {
-    // Probability of a -2 move
-    return 1 / (1 + 3 * z * z);
-}
-double CLK::probability_of_0_move() {
-    // Probability of a 0 move (doesn't change length of knot)
-    const double z_squared = z * z;
-    return (1 + z_squared) / 2 / (1 + 3 * z_squared);
 }
 
 double CLK::move_probability(ContiguousCircularListNode<ivec3>* node, Edge direction) {
@@ -90,27 +82,27 @@ double CLK::move_probability(ContiguousCircularListNode<ivec3>* node, Edge direc
     }
 
     if (node->prev->data - node->data == direction &&
-        node->next->next->data    - node->next->data   == direction) {
+        node->next->next->data - node->next->data == direction) {
         // -2 move
         if (vertices.size() > 4) {
-            return probability_of_m2_move();
+            return probability_of_m2_move;
         }
     } else if (node->prev->data - node->data != direction &&
-               node->next->next->data    - node->next->data   != direction) {
+               node->next->next->data - node->next->data != direction) {
         // +2 move
         if (!contains_vertex(node->data + direction) &&
-            !contains_vertex(  node->next->data + direction)) {
-            return probability_of_p2_move();
+            !contains_vertex(node->next->data + direction)) {
+            return probability_of_p2_move;
         }
     } else if (node->prev->data - node->data == direction) {
         // 0 move (swap this edge with the previous edge)
         if (!contains_vertex(node->next->data + direction)) {
-            return probability_of_0_move();
+            return probability_of_0_move;
         }
     } else {
         // 0 move (swap this edge with the next edge)
         if (!contains_vertex(node->data + direction)) {
-            return probability_of_0_move();
+            return probability_of_0_move;
         }
     }
     return 0;
@@ -119,7 +111,7 @@ double CLK::move_probability(ContiguousCircularListNode<ivec3>* node, Edge direc
 bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
     // Given the first vertex of the edge to be moved, determines the direction to move it in,
     // then moves, adds, and deletes vertices as necessary to perform that move
-    Edge possible_move_directions[6] = {'l', 'r', 'u', 'd', 'f', 'b'};
+    const Edge possible_move_directions[6] = {'l', 'r', 'u', 'd', 'f', 'b'};
     double possible_move_probabilities[6] = {0, 0, 0, 0, 0, 0};
     double total_probability = 0;
 
@@ -129,20 +121,17 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
         total_probability += probability;
     }
     
-    // Ensure that the probabilities of all possible moves add up to 1
-    if (total_probability == 0) {
-        return false;
-    } else if (total_probability > 1) {
+    // Using a value slightly above 1 here in case of rounding errors
+    if (total_probability > 1.000001) {
         std::cerr << "Error: calculated probabilities add up to more than one" << std::endl;
         throw std::exception();
-    } else if (total_probability < 1) {
-        for (int i = 0; i < 6; ++i) {
-            possible_move_probabilities[i] /= total_probability;
-        }
     }
 
     // Select one of the 6 possible directions at random using the probabilities calculated above
     double random_num = (double) std::rand() / (double) RAND_MAX;
+    if (random_num > total_probability) {
+        return false;
+    }
     Edge direction;
     for (int i = 0; i < 6; ++i) {
         if (random_num <= possible_move_probabilities[i]) {
@@ -165,7 +154,6 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
         ivec3 new_vertex_coords = node->next->data + direction;
         vertices_hashmap.insert(new_vertex_coords);
         vertices.insert_node(new_vertex_coords, node);
-
         new_vertex_coords = node->data + direction;
         vertices_hashmap.insert(new_vertex_coords);
         vertices.insert_node(new_vertex_coords, node);
@@ -185,15 +173,14 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
 }
 
 bool is_valid_CLK(std::string clk_as_str) {
-    // TODO: use an unordered set to check that this path is self avoiding
-    std::array<int, 3> coords = {0, 0, 0};
-    Edge last_edge = clk_as_str[clk_as_str.size() - 1];
+    ivec3 coords = {0, 0, 0};
+    std::unordered_set<ivec3, Hash> occupied_vertices;
     for (char letter : clk_as_str) {
         Edge current_edge = Edge(letter);
-        if (!is_valid_edge(current_edge)) { return false; }
-        if (current_edge == opposite_direction(last_edge)) { return false; }
         coords += current_edge;
-        last_edge = current_edge;
+        if (!is_valid_edge(current_edge)) { return false; }
+        if (occupied_vertices.find(coords) != occupied_vertices.end()) { return false; }
+        occupied_vertices.insert(coords);
     }
-    return operator==(coords, {0, 0, 0});
+    return coords == ivec3({0, 0, 0});
 }

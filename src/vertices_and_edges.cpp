@@ -119,6 +119,5 @@ Edge opposite_direction(Edge e) {
 }
 
 size_t Hash::operator()(const ivec3& vertex) const {
-    std::string vertex_as_str = std::to_string(vertex[0]) + "," + std::to_string(vertex[1]) + "," + std::to_string(vertex[2]);
-    return std::hash<std::string>()(vertex_as_str);
+    return (vertex[0] % 256) << 16 + (vertex[1] % 256) << 8 + (vertex[2] % 256);
 }
