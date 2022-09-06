@@ -119,6 +119,5 @@ Edge opposite_direction(Edge e) {
 }
 
 size_t Hash::operator()(const ivec3& vertex) const {
-    // Note: this is NOT guaranteed to be unique
-    return (vertex[0] % 1024) << 20 + (vertex[1] % 1024) << 10 + (vertex[2] % 1024);
+    return (vertex[0] & 0xff) << 16 ^ (vertex[1] & 0xff) << 8 ^ vertex[2] & 0xff;
 }
