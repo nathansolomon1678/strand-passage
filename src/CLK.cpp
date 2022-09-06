@@ -75,36 +75,38 @@ double CLK::move_probability(ContiguousCircularListNode<ivec3>* node, Edge direc
     // Given the first vertex of the edge to be moved (`node`) and the direction to move it in,
     // returns the probability of that type of move
 
-    // If the edge is parallel or antiparallel to the move direction, return 0
     const Edge current_edge = node->next->data - node->data;
     if (current_edge == direction || current_edge == opposite_direction(direction)) {
         return 0;
     }
 
-    if (node->prev->data - node->data == direction &&
-        node->next->next->data - node->next->data == direction) {
-        // -2 move
-        if (vertices.size() > 4) {
-            return probability_of_m2_move;
-        }
-    } else if (node->prev->data - node->data != direction &&
-               node->next->next->data - node->next->data != direction) {
-        // +2 move
-        if (!contains_vertex(node->data + direction) &&
-            !contains_vertex(node->next->data + direction)) {
-            return probability_of_p2_move;
-        }
-    } else if (node->prev->data - node->data == direction) {
-        // 0 move (swap this edge with the previous edge)
-        if (!contains_vertex(node->next->data + direction)) {
-            return probability_of_0_move;
+    if (node->prev->data - node->data == direction) {
+        if (node->next->next->data - node->next->data == direction) {
+            // -2 move
+            if (vertices.size() > 4) {
+                return probability_of_m2_move;
+            }
+        } else {
+            // 0 move (swap this edge with the previous edge)
+            if (!contains_vertex(node->next->data + direction)) {
+                return probability_of_0_move;
+            }
         }
     } else {
-        // 0 move (swap this edge with the next edge)
-        if (!contains_vertex(node->data + direction)) {
-            return probability_of_0_move;
+        if (node->next->next->data - node->next->data == direction) {
+            // 0 move (swap this edge with the next edge)
+            if (!contains_vertex(node->data + direction)) {
+                return probability_of_0_move;
+            }
+        } else {
+            // +2 move
+            if (!contains_vertex(node->data + direction) &&
+                !contains_vertex(node->next->data + direction)) {
+                return probability_of_p2_move;
+            }
         }
     }
+
     return 0;
 }
 
@@ -119,12 +121,6 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
         const double probability = move_probability(node, possible_move_directions[i]);
         possible_move_probabilities[i] = probability;
         total_probability += probability;
-    }
-    
-    // Using a value slightly above 1 here in case of rounding errors
-    if (total_probability > 1.000001) {
-        std::cerr << "Error: calculated probabilities add up to more than one" << std::endl;
-        throw std::exception();
     }
 
     // Select one of the 6 possible directions at random using the probabilities calculated above
