@@ -1,7 +1,7 @@
 #ifndef CLK_H
 #define CLK_H
 
-#include "contiguous_list.h"
+#include "data_structures.h"
 #include "vertices_and_edges.h"
 
 #include <array>
@@ -28,7 +28,9 @@ class CLK {
 
   private:
     ContiguousCircularList<ivec3> vertices;
-    std::unordered_set<ivec3, Hash> vertices_hashmap;  ////// TODO: use a map from ivec3 to the address of the corresponding node, so that strand passage runs in constant time
+    // TODO: instead of a hashtable of vertices, use a hashmap from vertices to their addresses
+    // in memory, so that strand passage can run in constant time
+    iVec3_hashtable vertices_hashtable;
     double z;
     double q;
     double move_probability(ContiguousCircularListNode<ivec3>* node, Edge direction);

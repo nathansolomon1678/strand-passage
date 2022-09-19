@@ -31,8 +31,4 @@ void operator+=(ivec3& vertex, const Edge e);
 Edge operator-(const ivec3& vertex1, const ivec3& vertex2);
 Edge opposite_direction(Edge e);
 
-struct Hash {
-    size_t operator()(const ivec3& vertex) const;
-};
-
 #endif  // VERTICES_AND_EDGES_H

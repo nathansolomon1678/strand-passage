@@ -117,7 +117,3 @@ Edge opposite_direction(Edge e) {
             throw std::exception();
     }
 }
-
-size_t Hash::operator()(const ivec3& vertex) const {
-    return (vertex[0] & 0xff) << 16 ^ (vertex[1] & 0xff) << 8 ^ vertex[2] & 0xff;
-}

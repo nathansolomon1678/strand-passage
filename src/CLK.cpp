@@ -9,11 +9,11 @@ CLK::CLK(std::string filename) {
     // inserting elements normally, or else the linking won't work
     file_stream >> x >> y >> z;
     vertices.create_initial_node({x, y, z});
-    vertices_hashmap.insert({x, y, z});
+    vertices_hashtable.insert({x, y, z});
 
     while (file_stream >> x >> y >> z) {
         vertices.insert_node({x, y, z}, vertices.head->prev);
-        vertices_hashmap.insert({x, y, z});
+        vertices_hashtable.insert({x, y, z});
     }
 }
 
@@ -53,7 +53,7 @@ std::string CLK::get_knot_as_string() {
 }
 
 bool CLK::contains_vertex(const ivec3& coords) {
-    return vertices_hashmap.find(coords) != vertices_hashmap.end();
+    return vertices_hashtable.contains(coords);
 }
 
 void CLK::bfacf_move() {
@@ -140,29 +140,29 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
     if (node->prev->data - node->data == direction &&
         node->next->next->data - node->next->data == direction) {
         // Perform a -2 move
-        vertices_hashmap.erase(vertices_hashmap.find(node->data));
-        vertices_hashmap.erase(vertices_hashmap.find(node->next->data));
+        vertices_hashtable.erase(node->data);
+        vertices_hashtable.erase(node->next->data);
         vertices.delete_node(node->next);
         vertices.delete_node(node);
     } else if (node->prev->data - node->data != direction &&
                node->next->next->data - node->next->data != direction) {
         // Perform a +2 move
         ivec3 new_vertex_coords = node->next->data + direction;
-        vertices_hashmap.insert(new_vertex_coords);
+        vertices_hashtable.insert(new_vertex_coords);
         vertices.insert_node(new_vertex_coords, node);
         new_vertex_coords = node->data + direction;
-        vertices_hashmap.insert(new_vertex_coords);
+        vertices_hashtable.insert(new_vertex_coords);
         vertices.insert_node(new_vertex_coords, node);
     } else if (node->prev->data - node->data == direction) {
         // Perform a 0 move by swapping this edge with the previous edge
-        vertices_hashmap.erase(vertices_hashmap.find(node->data));
+        vertices_hashtable.erase(node->data);
         node->data = node->next->data + direction;
-        vertices_hashmap.insert(node->data);
+        vertices_hashtable.insert(node->data);
     } else {
         // Perform a 0 move by swapping this edge with the next edge
-        vertices_hashmap.erase(vertices_hashmap.find(node->next->data));
+        vertices_hashtable.erase(node->next->data);
         node->next->data = node->data + direction;
-        vertices_hashmap.insert(node->next->data);
+        vertices_hashtable.insert(node->next->data);
     }
 
     return true;
@@ -170,12 +170,12 @@ bool CLK::perform_move(ContiguousCircularListNode<ivec3>* node) {
 
 bool is_valid_CLK(std::string clk_as_str) {
     ivec3 coords = {0, 0, 0};
-    std::unordered_set<ivec3, Hash> occupied_vertices;
+    iVec3_hashtable occupied_vertices;
     for (char letter : clk_as_str) {
         Edge current_edge = Edge(letter);
         coords += current_edge;
         if (!is_valid_edge(current_edge)) { return false; }
-        if (occupied_vertices.find(coords) != occupied_vertices.end()) { return false; }
+        if (occupied_vertices.contains(coords)) { return false; }
         occupied_vertices.insert(coords);
     }
     return coords == ivec3({0, 0, 0});

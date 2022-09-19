@@ -10,6 +10,9 @@
 README
 NEWS
 AUTHORS
+COPYING
+INSTALL
+ChangeLog
 
 # KnotPlot configuration files
 knotplot_layout.kps
