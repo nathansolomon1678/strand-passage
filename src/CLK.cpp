@@ -178,118 +178,92 @@ void CLK::bfacf_move() {
 void CLK::bfacf_moves(int num_steps) {
     for (int i = 0; i < num_steps; ++i) {
         bfacf_move();
-        std::cout <<get_knot_as_string() << std::endl;
     }
 }
 
-double CLK::move_probability(size_t start_vertex_index, Edge direction) const {
-    // Given the first vertex of the edge to be moved and the direction to move it in,
-    // returns the probability of that type of move
-
+bool CLK::perform_move(size_t start_vertex_index) {
     // start_vertex and end_vertex are the points at the beginning and end of
     // the edge to be moved
-    // TODO: combine this with the perform_move function so that these vars below
-    // don't need to be redefined all the time
-    size_t end_vertex_index = vertices[start_vertex_index].index_of_next;
-    size_t next_vertex_index = vertices[end_vertex_index].index_of_next;
-    size_t prev_vertex_index = vertices[start_vertex_index].index_of_prev;
+    size_t end_vertex_index   = vertices[start_vertex_index].index_of_next;
+    size_t next_vertex_index  = vertices[end_vertex_index].index_of_next;
+    size_t prev_vertex_index  = vertices[start_vertex_index].index_of_prev;
+
     const ivec3& start_vertex = vertices[start_vertex_index].coords;
     const ivec3& end_vertex   = vertices[  end_vertex_index].coords;
     const ivec3& prev_vertex  = vertices[ prev_vertex_index].coords;
     const ivec3& next_vertex  = vertices[ next_vertex_index].coords;
 
     const Edge current_edge = end_vertex - start_vertex;
-    if (current_edge == direction || current_edge == opposite_direction(direction)) {
-        return 0;
-    }
+    const Edge    prev_edge = start_vertex - prev_vertex;
+    const Edge    next_edge = next_vertex - end_vertex;
 
-    if (prev_vertex - start_vertex == direction) {
-        if (next_vertex - end_vertex == direction) {
-            // -2 move
-            if (knot_length > 4) {
-                return probability_of_m2_move;
-            }
-        } else {
-            // 0 move (swap this edge with the previous edge)
-            if (!contains_vertex(end_vertex + direction)) {
-                return probability_of_0_move;
-            }
-        }
-    } else {
-        if (next_vertex - end_vertex == direction) {
-            // 0 move (swap this edge with the next edge)
-            if (!contains_vertex(start_vertex + direction)) {
-                return probability_of_0_move;
-            }
-        } else {
-            // +2 move
-            if (!contains_vertex(start_vertex + direction) &&
-                !contains_vertex(end_vertex + direction)) {
-                return probability_of_p2_move;
-            }
-        }
-    }
-
-    return 0;
-}
-
-bool CLK::perform_move(size_t start_vertex_index) {
-    // Given the first vertex of the edge to be moved, determines the direction to move it in,
-    // then moves, adds, and deletes vertices as necessary to perform that move
     const Edge possible_move_directions[6] = {'l', 'r', 'u', 'd', 'f', 'b'};
-    double possible_move_probabilities[6] = {0, 0, 0, 0, 0, 0};
-    double total_probability = 0;
-    
-
-    // start_vertex and end_vertex are the points at the beginning and end of
-    // the edge to be moved
-    size_t end_vertex_index = vertices[start_vertex_index].index_of_next;
-    size_t next_vertex_index = vertices[end_vertex_index].index_of_next;
-    size_t prev_vertex_index = vertices[start_vertex_index].index_of_prev;
-    const ivec3& start_vertex = vertices[start_vertex_index].coords;
-    const ivec3& end_vertex   = vertices[  end_vertex_index].coords;
-    const ivec3& prev_vertex  = vertices[ prev_vertex_index].coords;
-    const ivec3& next_vertex  = vertices[ next_vertex_index].coords;
-
-    for (int i = 0; i < 6; ++i) {
-        const double probability = move_probability(start_vertex_index, possible_move_directions[i]);
-        possible_move_probabilities[i] = probability;
-        total_probability += probability;
-    }
-
-    // Select one of the 6 possible directions at random using the probabilities calculated above
     double random_num = (double) std::rand() / (double) RAND_MAX;
-    if (random_num > total_probability) {
-        return false;
-    }
-    Edge direction;
-    for (int i = 0; i < 6; ++i) {
-        if (random_num <= possible_move_probabilities[i]) {
-            direction = possible_move_directions[i];
+    Edge selected_direction;
+
+    for (Edge direction : possible_move_directions) {
+        if (current_edge == direction || current_edge == opposite_direction(direction)) {
+            continue;
+        }
+
+        if (prev_edge == opposite_direction(direction)) {
+            if (next_edge == direction) {
+                // -2 move
+                if (knot_length > 4) {
+                    random_num -= probability_of_m2_move;
+                }
+            } else {
+                // 0 move (swap this edge with the previous edge)
+                if (!contains_vertex(end_vertex + direction)) {
+                    random_num -= probability_of_0_move;
+                }
+            }
+        } else {
+            if (next_edge == direction) {
+                // 0 move (swap this edge with the next edge)
+                if (!contains_vertex(start_vertex + direction)) {
+                    random_num -= probability_of_0_move;
+                }
+            } else {
+                // +2 move
+                if (!contains_vertex(start_vertex + direction) &&
+                    !contains_vertex(end_vertex + direction)) {
+                    random_num -= probability_of_p2_move;
+                }
+            }
+        }
+
+        if (random_num <= 0) {
+            selected_direction = direction;
             break;
         }
-        random_num -= possible_move_probabilities[i];
     }
 
-    if (prev_vertex - start_vertex == direction &&
-        next_vertex - end_vertex == direction) {
+    if (random_num > 0) {
+        return false;
+    }
+
+
+    // TODO: clean up this whole function a bit more
+    if (prev_vertex - start_vertex == selected_direction &&
+        next_vertex - end_vertex == selected_direction) {
         // Perform a -2 move
         remove_vertex(start_vertex_index);
         remove_vertex(end_vertex_index);
-    } else if (prev_vertex - start_vertex != direction &&
-               next_vertex - end_vertex != direction) {
+    } else if (prev_vertex - start_vertex != selected_direction &&
+               next_vertex - end_vertex != selected_direction) {
         // Perform a +2 move
-        insert_vertex(start_vertex + direction, start_vertex_index);
-        insert_vertex(end_vertex + direction, vertices_address_book[knot_length - 1]);
-    } else if (prev_vertex - start_vertex == direction) {
+        insert_vertex(start_vertex + selected_direction, start_vertex_index);
+        insert_vertex(end_vertex + selected_direction, vertices_address_book[knot_length - 1]);
+    } else if (prev_vertex - start_vertex == selected_direction) {
         // Perform a 0 move by swapping this edge with the previous edge
         // Note that remove_vertex can change the index of other vertices,
         // so we have to call insert_vertex before remove_vertex
-        insert_vertex(end_vertex + direction, start_vertex_index);
+        insert_vertex(end_vertex + selected_direction, start_vertex_index);
         remove_vertex(start_vertex_index);
     } else {
         // Perform a 0 move by swapping this edge with the next edge
-        insert_vertex(start_vertex + direction, start_vertex_index);
+        insert_vertex(start_vertex + selected_direction, start_vertex_index);
         remove_vertex(end_vertex_index);
     }
 
